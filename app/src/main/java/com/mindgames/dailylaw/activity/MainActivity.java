@@ -47,7 +47,23 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-//
+//        final MaterialDialog mMaterialDialog = new MaterialDialog(getActivity()).setContentView(view);
+//        mMaterialDialog.setTitle("Exit")
+//                .setMessage("")
+//                .setPositiveButton("DONE", new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        mMaterialDialog.dismiss();
+//                    }
+//                });
+////                        .setNegativeButton("CANCEL", new View.OnClickListener() {
+////                            @Override
+////                            public void onClick(View v) {
+////                                mMaterialDialog.dismiss();
+////                            }
+////                        });
+//        mMaterialDialog.setCanceledOnTouchOutside(false);
+//        mMaterialDialog.show();
 
 
     }
