@@ -1,0 +1,60 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 21
+    apply plugin: 'eclipse'
+    buildToolsVersion "21.1.2"
+
+    defaultConfig {
+        applicationId "com.mindgames.dailylaw"
+        minSdkVersion 15
+        targetSdkVersion 21
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+
+}
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:22.0.0'
+    compile 'com.android.support:recyclerview-v7:21.0.+'
+
+    //ButterKnife
+    compile 'com.jakewharton:butterknife:6.1.0'
+
+    //ListViewAnimations
+    compile 'com.nhaarman.listviewanimations:lib-core:3.1.0@aar'
+    compile 'com.nhaarman.listviewanimations:lib-manipulation:3.1.0@aar'
+    compile 'com.nhaarman.listviewanimations:lib-core-slh:3.1.0@aar'
+
+    //AndroidViewAnimations
+    compile 'com.nineoldandroids:library:2.4.0'
+    compile 'com.daimajia.easing:library:1.0.1@aar'
+    compile 'com.daimajia.androidanimations:library:1.1.3@aar'
+
+    //ActiveAndroid - easier SQLite interaction
+    compile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
+
+    //Android Bootstrap
+    compile 'com.beardedhen:androidbootstrap:+'
+
+    //Core cardslib
+    compile 'com.github.gabrielemariotti.cards:cardslib-core:2.1.0'
+    //Optional for built-in cards
+    compile 'com.github.gabrielemariotti.cards:cardslib-cards:2.1.0'
+
+    //MaterialDialog
+    compile 'me.drakeet.materialdialog:library:1.2.2'
+
+}

@@ -1,0 +1,69 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:card="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.mindgames.dailylaw.activity.LawBookFragment">
+
+
+    <!--<TextView-->
+        <!--android:id="@+id/textView"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:layout_marginTop="20dp"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:gravity="center_horizontal"-->
+        <!--android:textSize="30dp"-->
+        <!--android:text="LawBook CHAPTERS INDEX"-->
+        <!--android:textStyle="bold"/>-->
+
+    <!--<ListView
+        android:id="@+id/ipclist"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:divider="@color/list_divider"
+        android:dividerHeight="1dp"
+        android:listSelector="@drawable/list_row_selector" />
+
+        <it.gmariotti.cardslib.library.view.CardListView
+            android:id="@+id/myList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/textView"
+            android:layout_marginTop="20dp"
+            card:list_card_layout_resourceID="@layout/list_card_layout"
+            style="@style/list_card"/> -->
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="fill_parent"
+        android:layout_margin="15dp"
+        android:background="#BCAAA4"
+        android:layout_height="wrap_content">
+
+    <!-- Spinner Element -->
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:padding="5dp"
+        android:spinnerMode="dialog"
+        android:prompt="@string/spinner_title" />
+    </RelativeLayout>
+
+    <com.mindgames.dailylaw.activity.AnimatedExpandableListView
+            android:id="@+id/lvExp"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_below="@+id/relativeLayout"
+            android:dividerHeight="0.5dp"
+            android:divider="#A1887F"
+            android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft"
+            android:layout_margin="5dp">
+
+    </com.mindgames.dailylaw.activity.AnimatedExpandableListView>
+
+
+</RelativeLayout>

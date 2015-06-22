@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">Daily Law</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_search">Search</string>
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+
+    <string name="nav_item_home">Daily Law</string>
+    <string name="nav_item_lawbook">Law Book</string>
+    <string name="nav_item_bookmarks">Bookmarks</string>
+    <string name="nav_item_settings">Settings</string>
+
+    <!-- navigation drawer item labels  -->
+    <string-array name="nav_drawer_labels">
+        <item>@string/nav_item_home</item>
+        <item>@string/nav_item_lawbook</item>
+        <item>@string/nav_item_bookmarks</item>
+        <item>@string/nav_item_settings</item>
+    </string-array>
+
+    <string name="title_settings">Settings</string>
+    <string name="title_lawbook">Law Book</string>
+    <string name="title_home">Daily Law</string>
+    <string name="title_bookmarks">Bookmarks</string>
+
+
+    <string name="card_empty_cardwithlist_text">No data....</string>
+    <string name="title_activity_ipcdisplay">IPCDisplay</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_bookmarks">Bookmarks</string>
+    <string name="title_activity_search_results">SearchResultsActivity</string>
+    <string name="search_hint">Enter a section number ..</string>
+    <string name="spinner_title">Select One</string>
+
+</resources>
