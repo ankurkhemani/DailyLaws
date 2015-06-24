@@ -2,9 +2,13 @@ package com.mindgames.dailylaw.activity;
 
 
 import android.app.SearchManager;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -25,6 +29,10 @@ import com.mindgames.dailylaw.R;
 import com.mindgames.dailylaw.model.Chapters;
 import com.mindgames.dailylaw.model.LawBook;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -39,7 +47,6 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
 
     private Toolbar mToolbar;
     private FragmentDrawer drawerFragment;
-
     static HashMap<Integer, List<LawBook>> ipcMap, crpcMap, cpcMap, evidenceMap, constitutionMap;
     static HashMap<Integer,List<String>> listDataHeaderContainer;
     static HashMap<Integer,HashMap<String, List<String>>> listDataChildContainer;
@@ -68,6 +75,54 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
 
     }
 
+    private void CopyReadAssets(String filename)
+    {
+        AssetManager assetManager = getAssets();
+
+        InputStream in = null;
+        OutputStream out = null;
+        File file = new File(getFilesDir(), filename);
+        try
+        {
+            in = assetManager.open(filename);
+            out = openFileOutput(file.getName(), Context.MODE_WORLD_READABLE);
+
+            copyFile(in, out);
+            in.close();
+            in = null;
+            out.flush();
+            out.close();
+            out = null;
+        } catch (Exception e)
+        {
+            Log.e("tag", e.getMessage());
+        }
+
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setDataAndType(
+                Uri.parse("file://" + getFilesDir() + "/" + filename),
+                "application/pdf");
+
+        try {
+            startActivity(intent);
+        }
+        catch (ActivityNotFoundException e) {
+            Toast.makeText(MainActivity.this,
+                    "No Application Available to View PDF",
+                    Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void copyFile(InputStream in, OutputStream out) throws IOException
+    {
+        byte[] buffer = new byte[1024];
+        int read;
+        while ((read = in.read(buffer)) != -1)
+        {
+            out.write(buffer, 0, read);
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +139,8 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
         prepareIPCListData(3, evidenceMap, 11);
         prepareIPCListData(4, constitutionMap, 25);
 
+        // showing pdf
+        //CopyReadAssets("a.pdf");
 
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
