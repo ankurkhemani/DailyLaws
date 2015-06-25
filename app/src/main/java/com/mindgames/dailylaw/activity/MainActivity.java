@@ -77,53 +77,7 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
 //        mMaterialDialog.show();
     }
 
-    private void CopyReadAssets(String filename)
-    {
-        AssetManager assetManager = getAssets();
 
-        InputStream in = null;
-        OutputStream out = null;
-        File file = new File(getFilesDir(), filename);
-        try
-        {
-            in = assetManager.open(filename);
-            out = openFileOutput(file.getName(), Context.MODE_WORLD_READABLE);
-
-            copyFile(in, out);
-            in.close();
-            in = null;
-            out.flush();
-            out.close();
-            out = null;
-        } catch (Exception e)
-        {
-            Log.e("tag", e.getMessage());
-        }
-
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setDataAndType(
-                Uri.parse("file://" + getFilesDir() + "/" + filename),
-                "application/pdf");
-
-        try {
-            startActivity(intent);
-        }
-        catch (ActivityNotFoundException e) {
-            Toast.makeText(MainActivity.this,
-                    "No Application Available to View PDF",
-                    Toast.LENGTH_LONG).show();
-        }
-    }
-
-    private void copyFile(InputStream in, OutputStream out) throws IOException
-    {
-        byte[] buffer = new byte[1024];
-        int read;
-        while ((read = in.read(buffer)) != -1)
-        {
-            out.write(buffer, 0, read);
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,10 +94,6 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
         prepareIPCListData(2, cpcMap, 12);
         prepareIPCListData(3, evidenceMap, 11);
         prepareIPCListData(4, constitutionMap, 25);
-
-        // showing pdf
-        //CopyReadAssets("a.pdf");
-
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
 
@@ -164,7 +114,7 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
 
         // display the first navigation drawer view on app launch
         //displayView(0);
-//        Fragment fragment = new HomeFragment();
+//        Fragment fragment = new DailyLawFragment();
 //        FragmentManager fragmentManager = getSupportFragmentManager();
 //        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 //        fragmentTransaction.replace(R.id.container_body, fragment).commit();
@@ -237,7 +187,7 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
         switch (position) {
 
             case 0:
-                fragment = new HomeFragment();
+                fragment = new DailyLawFragment();
                 title = getString(R.string.title_home);
                 break;
             case 1:

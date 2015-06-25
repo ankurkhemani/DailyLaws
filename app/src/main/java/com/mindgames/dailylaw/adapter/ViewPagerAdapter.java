@@ -4,7 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.mindgames.dailylaw.activity.HomeFragment;
+import com.mindgames.dailylaw.activity.DailyLawFragment;
 import com.mindgames.dailylaw.activity.LawBookFragment;
 
 /**
@@ -31,7 +31,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
         switch (position) {
             case 0:
                 // Top Rated fragment activity
-                return new HomeFragment();
+                return new DailyLawFragment();
             case 1:
                 // Games fragment activity
                 return new LawBookFragment();
