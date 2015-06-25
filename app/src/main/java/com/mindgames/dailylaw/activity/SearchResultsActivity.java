@@ -11,6 +11,8 @@ import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -27,6 +29,7 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.mindgames.dailylaw.R;
+import com.mindgames.dailylaw.external.TypeFaceSpan;
 import com.mindgames.dailylaw.model.LawBook;
 
 import java.util.ArrayList;
@@ -63,8 +66,13 @@ public class SearchResultsActivity extends ActionBarActivity {
         // Enabling Back navigation on Action Bar icon
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        //getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+        //font change
+        SpannableString s = new SpannableString("Search");
+        s.setSpan(new TypeFaceSpan(SearchResultsActivity.this, "alpha_echo.ttf"), 0, s.length(),
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        getSupportActionBar().setTitle(s);
 
         txtQuery = (TextView) findViewById(R.id.txtQuery);
 
@@ -81,12 +89,6 @@ public class SearchResultsActivity extends ActionBarActivity {
         // TODO Auto-generated method stub
         super.onBackPressed();
         overridePendingTransition(R.anim.right_in, R.anim.right_out);
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        setIntent(intent);
-        handleIntent(intent);
     }
 
     @Override

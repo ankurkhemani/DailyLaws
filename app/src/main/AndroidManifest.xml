@@ -49,6 +49,18 @@
 
         </activity>
 
+        <activity
+            android:name=".activity.BookmarksActivity"
+            android:label="@string/title_activity_bookmarks"
+            android:parentActivityName=".activity.MainActivity" >
+            <intent-filter>
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+
+        </activity>
+
     </application>
 
 </manifest>

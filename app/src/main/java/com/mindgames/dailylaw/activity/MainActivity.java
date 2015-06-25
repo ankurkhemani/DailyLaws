@@ -1,31 +1,32 @@
 package com.mindgames.dailylaw.activity;
 
 
-import android.app.SearchManager;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.SearchView;
-import android.widget.Switch;
 import android.widget.Toast;
 
 
 import com.activeandroid.ActiveAndroid;
 import com.mindgames.dailylaw.R;
+import com.mindgames.dailylaw.adapter.ViewPagerAdapter;
+import com.mindgames.dailylaw.external.TypeFaceSpan;
 import com.mindgames.dailylaw.model.Chapters;
 import com.mindgames.dailylaw.model.LawBook;
 
@@ -37,9 +38,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import butterknife.ButterKnife;
-import me.drakeet.materialdialog.MaterialDialog;
-
 
 public class MainActivity extends ActionBarActivity implements FragmentDrawer.FragmentDrawerListener {
 
@@ -50,6 +48,12 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
     static HashMap<Integer, List<LawBook>> ipcMap, crpcMap, cpcMap, evidenceMap, constitutionMap;
     static HashMap<Integer,List<String>> listDataHeaderContainer;
     static HashMap<Integer,HashMap<String, List<String>>> listDataChildContainer;
+
+    ViewPager pager;
+    ViewPagerAdapter adapter;
+    SlidingTabLayout tabs;
+    CharSequence Titles[]={"Daily Law","Law Book", "Favorites"};
+    int Numboftabs =2;
 
     @Override
     public void onBackPressed() {
@@ -71,8 +75,6 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
 ////                        });
 //        mMaterialDialog.setCanceledOnTouchOutside(false);
 //        mMaterialDialog.show();
-
-
     }
 
     private void CopyReadAssets(String filename)
@@ -148,13 +150,52 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        SpannableString s = new SpannableString("Indian Laws");
+        s.setSpan(new TypeFaceSpan(MainActivity.this, "alpha_echo.ttf"), 0, s.length(),
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        // Update the action bar title with the TypefaceSpan instance
+        getSupportActionBar().setTitle(s);
+
         drawerFragment = (FragmentDrawer)
                 getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
         drawerFragment.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout), mToolbar);
         drawerFragment.setDrawerListener(this);
 
         // display the first navigation drawer view on app launch
-        displayView(0);
+        //displayView(0);
+//        Fragment fragment = new HomeFragment();
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//        fragmentTransaction.replace(R.id.container_body, fragment).commit();
+//
+//        // set the toolbar title
+//        getSupportActionBar().setTitle(getString(R.string.title_home));
+
+
+
+        // Creating The ViewPagerAdapter and Passing Fragment Manager, Titles fot the Tabs and Number Of Tabs.
+        adapter =  new ViewPagerAdapter(getSupportFragmentManager(),Titles, Numboftabs);
+
+        // Assigning ViewPager View and setting the adapter
+        pager = (ViewPager) findViewById(R.id.pager);
+        pager.setAdapter(adapter);
+
+        // Assiging the Sliding Tab Layout View
+        tabs = (SlidingTabLayout) findViewById(R.id.tabs);
+        tabs.setDistributeEvenly(true); // To make the Tabs Fixed set this true, This makes the tabs Space Evenly in Available width
+
+        // Setting Custom Color for the Scroll bar indicator of the Tab View
+        tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
+            @Override
+            public int getIndicatorColor(int position) {
+                return getResources().getColor(R.color.colorPrimaryDark);
+            }
+        });
+
+        // Setting the ViewPager For the SlidingTabsLayout
+        tabs.setViewPager(pager);
+
     }
 
 
@@ -172,15 +213,17 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        if(id == R.id.action_search) {
-            Intent myIntent = new Intent(MainActivity.this, SearchResultsActivity.class);
-            this.startActivity(myIntent);
-            return true;
+        // Handle action buttons
+        switch (item.getItemId()) {
+            case R.id.action_search:
+                Intent myIntent = new Intent(MainActivity.this, SearchResultsActivity.class);
+                this.startActivity(myIntent);
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
         }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -192,6 +235,7 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
         Fragment fragment = null;
         String title = getString(R.string.app_name);
         switch (position) {
+
             case 0:
                 fragment = new HomeFragment();
                 title = getString(R.string.title_home);
@@ -201,9 +245,8 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
                 title = getString(R.string.title_lawbook);
                 break;
             case 2:
-                fragment = new BookmarksFragment();
-                title = getString(R.string.title_bookmarks);
-                break;
+                Intent myIntent = new Intent(MainActivity.this, BookmarksActivity.class);
+                this.startActivity(myIntent);
             case 3:
                 fragment = new MessagesFragment();
                 title = getString(R.string.title_settings);
@@ -214,13 +257,19 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
         }
 
         if (fragment != null) {
+            String backStateName = fragment.getClass().getName();
+
+
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.container_body, fragment);
+            //fragmentTransaction.addToBackStack(backStateName);
             fragmentTransaction.commit();
 
+            //drawerFragment.mDrawerToggle.setDrawerIndicatorEnabled(false);
+
             // set the toolbar title
-            getSupportActionBar().setTitle(title);
+            //getSupportActionBar().setTitle(title);
         }
 
     }
@@ -293,7 +342,7 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
             listDataChild.put(listDataHeader.get(i), chapMap.get(i)); // Header, Child data
         }
 
-        listDataHeaderContainer.put(Type,listDataHeader);
+        listDataHeaderContainer.put(Type, listDataHeader);
         listDataChildContainer.put(Type, listDataChild);
     }
 
