@@ -1,17 +1,16 @@
 package com.mindgames.dailylaw.activity;
 
+import android.app.Dialog;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ExpandableListView;
 import android.widget.Spinner;
@@ -21,12 +20,12 @@ import android.widget.ToggleButton;
 
 import com.mindgames.dailylaw.R;
 import com.mindgames.dailylaw.adapter.IPCListAdapter;
+import com.mindgames.dailylaw.external.AnimatedExpandableListView;
 import com.mindgames.dailylaw.model.LawBook;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import butterknife.InjectView;
 import me.drakeet.materialdialog.MaterialDialog;
 
 
@@ -172,11 +171,22 @@ public class LawBookFragment extends Fragment {
                         MainActivity.listDataHeaderContainer.get(spinnerPosition).get(groupPosition)).get(
                         childPosition) + " - " + typeMap.get(groupPosition).get(childPosition).SectionDisplay;
 
-                View view = LayoutInflater.from(getActivity()).inflate(R.layout.display, null);
-                final TextView txtView = (TextView) view.findViewById(R.id.display);
+                final Dialog alertDialog = new Dialog(getActivity());
+                alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+                alertDialog.setContentView(R.layout.display);
+                Button done = (Button) alertDialog.findViewById(R.id.done);
+                TextView dialogTitle = (TextView) alertDialog.findViewById(R.id.title);
+                TextView txtView = (TextView) alertDialog.findViewById(R.id.display);
+
+//                        Typeface typeface = Typeface.createFromAsset(getApplicationContext().getAssets(),
+//                                "fonts/alpha_echo.");
+//                        dialogTitle.setTypeface(typeface);
+                txtView.setTypeface(Typeface.SERIF);
+
                 txtView.setText(message1);
 
-                final ToggleButton bookmark = (ToggleButton) view.findViewById(R.id.bookmark);
+                final ToggleButton bookmark = (ToggleButton) alertDialog.findViewById(R.id.bookmark);
                 final int bm = typeMap.get(groupPosition).get(childPosition).Bookmark;
                 final int Id = typeMap.get(groupPosition).get(childPosition).Id;
 
@@ -226,47 +236,20 @@ public class LawBookFragment extends Fragment {
                     }
                 });
 
-                final MaterialDialog mMaterialDialog = new MaterialDialog(getActivity()).setContentView(view);
-                mMaterialDialog.setTitle(title)
-                        .setMessage(message1)
-                        .setPositiveButton("DONE", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                mMaterialDialog.dismiss();
-                            }
-                        });
-//                        .setNegativeButton("CANCEL", new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View v) {
-//                                mMaterialDialog.dismiss();
-//                            }
-//                        });
-                mMaterialDialog.setCanceledOnTouchOutside(false);
-                mMaterialDialog.show();
+                dialogTitle.setText(title);
+                alertDialog.show();
 
-//                String message = MainActivity.listDataHeaderContainer.get(spinnerPosition).get(groupPosition)
-//                        + "\n\n"
-//                        + MainActivity.listDataChildContainer.get(spinnerPosition).get(
-//                        MainActivity.listDataHeaderContainer.get(spinnerPosition).get(groupPosition)).get(
-//                        childPosition) + " - " + typeMap.get(groupPosition).get(childPosition).SectionDisplay;
+                done.setOnClickListener(new View.OnClickListener() {
 
-//                displayFragment = new DisplayFragment(); //  object of next fragment
-//                Bundle bundle = new Bundle();
-//                bundle.putString("message", message);
-//                bundle.putInt("Id", typeMap.get(groupPosition).get(childPosition).Id);
-//                bundle.putInt("bookmark", typeMap.get(groupPosition).get(childPosition).Bookmark);
-//                displayFragment.setArguments(bundle);
-//
-//                FragmentManager fm = getFragmentManager();
-//                ft = fm.beginTransaction();
-//
-//                Fragment currentFragment = getActivity().getSupportFragmentManager().findFragmentById(R.id.container_body);
-//
-//                ft.replace(R.id.container_body, displayFragment);//add display fragment to container
-//                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-//
-//                ft.addToBackStack(null);//add the transaction to the back stack so the user can navigate back
-//                ft.commit();
+                    @Override
+                    public void onClick(View v) {
+                        // TODO Auto-generated method stub
+                        // Log the user out
+                        alertDialog.dismiss();
+                    }
+                });
+
+
 
                 return false;
             }

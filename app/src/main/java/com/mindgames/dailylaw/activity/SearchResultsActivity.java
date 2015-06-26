@@ -2,9 +2,11 @@ package com.mindgames.dailylaw.activity;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NavUtils;
@@ -18,8 +20,10 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -82,6 +86,10 @@ public class SearchResultsActivity extends ActionBarActivity {
         // Find the ListView resource.
         listView = (ListView) findViewById( R.id.listView );
 
+        //inititally listview is invisible
+        listView.setVisibility(View.GONE);
+        txtQuery.setText("Please enter a section number that you want to search ..");
+
     }
 
     @Override
@@ -98,12 +106,13 @@ public class SearchResultsActivity extends ActionBarActivity {
         // Associate searchable configuration with the SearchView
         SearchView searchView = (SearchView) menu.findItem(R.id.action_search)
                 .getActionView();
-        searchView.setQueryHint("Enter section number .. ");
+        //searchView.setQueryHint("Enter section number .. ");
         searchView.setInputType(InputType.TYPE_CLASS_NUMBER);
         searchView.setFocusable(true);
         searchView.setIconifiedByDefault(false);
         searchView.requestFocusFromTouch();
         searchView.hasFocus();
+
 
         MenuItem searchViewItem = menu.findItem(R.id.action_search);
         searchViewItem.expandActionView();
@@ -111,17 +120,20 @@ public class SearchResultsActivity extends ActionBarActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                txtQuery.setText("Showing Results for Section " + query + " in the entire Law Book");
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
 
-                if(newText.isEmpty())
+                if(newText.isEmpty()) {
                     txtQuery.setText("Please enter a section number that you want to search ..");
-                else
-                    txtQuery.setText("Searching for Section " + newText + " in entire Law Book");
+                    listView.setVisibility(View.GONE);
+                }
+                else {
+                    txtQuery.setText("Showing Results for Section " + newText + " in the entire Law Book");
+                    listView.setVisibility(View.VISIBLE);
+                }
                 searchList = LawBook.searchQuery(newText);
 
                 ArrayList<String> listItems= new ArrayList<String>();
@@ -150,7 +162,7 @@ public class SearchResultsActivity extends ActionBarActivity {
                     }
                 }
 
-                // Create ArrayAdapter using the planet list.
+                // Create ArrayAdapter
                 ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(SearchResultsActivity.this, R.layout.list_item, listItems);
 
                 // Set the ArrayAdapter as the ListView's adapter.
@@ -159,8 +171,19 @@ public class SearchResultsActivity extends ActionBarActivity {
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                        View view = LayoutInflater.from(SearchResultsActivity.this).inflate(R.layout.display, null);
-                        final TextView txtView = (TextView) view.findViewById(R.id.display);
+                        final Dialog alertDialog = new Dialog(SearchResultsActivity.this);
+                        alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+                        alertDialog.setContentView(R.layout.display);
+                        Button done = (Button)alertDialog.findViewById(R.id.done);
+                        TextView dialogTitle = (TextView)alertDialog.findViewById(R.id.title);
+                        TextView txtView = (TextView)alertDialog.findViewById(R.id.display);
+
+//                        Typeface typeface = Typeface.createFromAsset(getApplicationContext().getAssets(),
+//                                "fonts/alpha_echo.");
+//                        dialogTitle.setTypeface(typeface);
+                        txtView.setTypeface(Typeface.SERIF);
+
                         String message1;
                         if (searchList.get(position).Type != 4)
                             message1 = "Section " + searchList.get(position).SectionNumber + " - " + searchList.get(position).SectionDisplay;
@@ -169,7 +192,7 @@ public class SearchResultsActivity extends ActionBarActivity {
 
                         txtView.setText(message1);
 
-                        final ToggleButton bookmark = (ToggleButton) view.findViewById(R.id.bookmark);
+                        final ToggleButton bookmark = (ToggleButton) alertDialog.findViewById(R.id.bookmark);
                         final int bm = searchList.get(position).Bookmark;
                         final int Id = searchList.get(position).Id;
 
@@ -220,23 +243,18 @@ public class SearchResultsActivity extends ActionBarActivity {
                             }
                         });
 
-                        final MaterialDialog mMaterialDialog = new MaterialDialog(SearchResultsActivity.this).setContentView(view);
-                        mMaterialDialog.setTitle(title)
-                                .setMessage(message1)
-                                .setPositiveButton("DONE", new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        mMaterialDialog.dismiss();
-                                    }
-                                });
-//                        .setNegativeButton("CANCEL", new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View v) {
-//                                mMaterialDialog.dismiss();
-//                            }
-//                        });
-                        mMaterialDialog.setCanceledOnTouchOutside(false);
-                        mMaterialDialog.show();
+                        dialogTitle.setText(title);
+                        alertDialog.show();
+
+                        done.setOnClickListener(new View.OnClickListener() {
+
+                            @Override
+                            public void onClick(View v) {
+                                // TODO Auto-generated method stub
+                                // Log the user out
+                                alertDialog.dismiss();
+                            }
+                        });
                     }
                 });
                 return false;

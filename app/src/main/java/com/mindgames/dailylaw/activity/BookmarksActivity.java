@@ -1,6 +1,8 @@
 package com.mindgames.dailylaw.activity;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
@@ -10,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
@@ -18,6 +22,7 @@ import android.widget.ToggleButton;
 import com.activeandroid.ActiveAndroid;
 import com.mindgames.dailylaw.R;
 import com.mindgames.dailylaw.adapter.IPCListAdapter;
+import com.mindgames.dailylaw.external.AnimatedExpandableListView;
 import com.mindgames.dailylaw.external.TypeFaceSpan;
 import com.mindgames.dailylaw.model.LawBook;
 
@@ -88,23 +93,34 @@ public class BookmarksActivity extends ActionBarActivity {
                                         int groupPosition, int childPosition, long id) {
 
                 if(lawbook.get(groupPosition).size()!=0) {
-                    View view = LayoutInflater.from(BookmarksActivity.this).inflate(R.layout.display, null);
-                    final TextView txtView = (TextView) view.findViewById(R.id.display);
+                    final Dialog alertDialog = new Dialog(BookmarksActivity.this);
+                    alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+                    alertDialog.setContentView(R.layout.display);
+                    Button done = (Button) alertDialog.findViewById(R.id.done);
+                    TextView dialogTitle = (TextView) alertDialog.findViewById(R.id.title);
+                    TextView txtView = (TextView) alertDialog.findViewById(R.id.display);
+
+//                        Typeface typeface = Typeface.createFromAsset(getApplicationContext().getAssets(),
+//                                "fonts/alpha_echo.");
+//                        dialogTitle.setTypeface(typeface);
+                    txtView.setTypeface(Typeface.SERIF);
+
                     String message1;
-                    if(groupPosition!=4)
-                         message1 = "Section " + lawbook.get(groupPosition).get(childPosition).SectionNumber + " - " + lawbook.get(groupPosition).get(childPosition).SectionDisplay;
+                    if (groupPosition != 4)
+                        message1 = "Section " + lawbook.get(groupPosition).get(childPosition).SectionNumber + " - " + lawbook.get(groupPosition).get(childPosition).SectionDisplay;
                     else
-                         message1 = "Part " + lawbook.get(groupPosition).get(childPosition).SectionNumber + " - " + lawbook.get(groupPosition).get(childPosition).SectionDisplay;
+                        message1 = "Part " + lawbook.get(groupPosition).get(childPosition).SectionNumber + " - " + lawbook.get(groupPosition).get(childPosition).SectionDisplay;
 
                     txtView.setText(message1);
 
-                    final ToggleButton bookmark = (ToggleButton) view.findViewById(R.id.bookmark);
+                    final ToggleButton bookmark = (ToggleButton) alertDialog.findViewById(R.id.bookmark);
                     final int bm = lawbook.get(groupPosition).get(childPosition).Bookmark;
                     final int Id = lawbook.get(groupPosition).get(childPosition).Id;
 
                     String title = "";
 
-                    switch(groupPosition){
+                    switch (groupPosition) {
                         case 0:
                             title = "Chapter " + lawbook.get(groupPosition).get(childPosition).ChapterNumber.IPCChapterDenotion +
                                     " - " + lawbook.get(groupPosition).get(childPosition).ChapterNumber.IPCChapterDescription;
@@ -128,11 +144,10 @@ public class BookmarksActivity extends ActionBarActivity {
                             break;
                     }
 
-                    if(bm==0) {
+                    if (bm == 0) {
                         bookmark.setTextOff("Add to Favorites");
                         bookmark.setChecked(false);
-                    }
-                    else {
+                    } else {
                         bookmark.setTextOn("Remove from Favorites");
                         bookmark.setChecked(true);
                     }
@@ -150,28 +165,20 @@ public class BookmarksActivity extends ActionBarActivity {
                         }
                     });
 
-                    final MaterialDialog mMaterialDialog = new MaterialDialog(BookmarksActivity.this).setContentView(view);
+                    dialogTitle.setText(title);
+                    alertDialog.show();
 
+                    done.setOnClickListener(new View.OnClickListener() {
 
+                        @Override
+                        public void onClick(View v) {
+                            // TODO Auto-generated method stub
+                            // Log the user out
+                            alertDialog.dismiss();
+                        }
+                    });
 
-                        mMaterialDialog.setTitle(title)
-                                .setMessage(message1)
-                                .setPositiveButton("DONE", new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        mMaterialDialog.dismiss();
-                                    }
-                                });
-    //                        .setNegativeButton("CANCEL", new View.OnClickListener() {
-    //                            @Override
-    //                            public void onClick(View v) {
-    //                                mMaterialDialog.dismiss();
-    //                            }
-    //                        });
-                        mMaterialDialog.setCanceledOnTouchOutside(false);
-                        mMaterialDialog.show();
                 }
-
                 return false;
             }
         });

@@ -66,9 +66,9 @@ public class DailyLawFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_dailylaw, container, false);
 
         ButterKnife.inject(this, rootView);
-        YoYo.with(Techniques.Tada)
-                .duration(1000)
-                .playOn(button1);
+//        YoYo.with(Techniques.Tada)
+//                .duration(1000)
+//                .playOn(button1);
         // Inflate the layout for this fragment
         return rootView;
     }

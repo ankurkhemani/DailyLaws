@@ -9,11 +9,10 @@ import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
 import com.mindgames.dailylaw.R;
-import com.mindgames.dailylaw.activity.AnimatedExpandableListView;
+import com.mindgames.dailylaw.external.AnimatedExpandableListView;
 
 public class IPCListAdapter extends AnimatedExpandableListView.AnimatedExpandableListAdapter {
 

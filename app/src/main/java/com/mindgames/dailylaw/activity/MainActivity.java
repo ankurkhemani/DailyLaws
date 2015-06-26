@@ -1,11 +1,7 @@
 package com.mindgames.dailylaw.activity;
 
 
-import android.content.ActivityNotFoundException;
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.AssetManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -16,24 +12,19 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 
 import com.activeandroid.ActiveAndroid;
 import com.mindgames.dailylaw.R;
 import com.mindgames.dailylaw.adapter.ViewPagerAdapter;
+import com.mindgames.dailylaw.external.SlidingTabLayout;
 import com.mindgames.dailylaw.external.TypeFaceSpan;
 import com.mindgames.dailylaw.model.Chapters;
 import com.mindgames.dailylaw.model.LawBook;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

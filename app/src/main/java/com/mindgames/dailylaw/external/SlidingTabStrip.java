@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.mindgames.dailylaw.activity;
+package com.mindgames.dailylaw.external;
 
 import android.R;
 import android.content.Context;

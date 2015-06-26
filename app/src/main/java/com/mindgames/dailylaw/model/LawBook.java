@@ -79,7 +79,7 @@ public class LawBook extends Model {
     public static List<LawBook> searchQuery(String query){
         return new Select()
                 .from(LawBook.class)
-                .where("SectionNumber REGEXP '" + query + "[A-Z]' or SectionNumber LIKE '" + query + "'" )
+                .where("SectionNumber GLOB '" + query + "[A-Z]' or SectionNumber LIKE '" + query + "'" )
                 .execute();
 
     }
