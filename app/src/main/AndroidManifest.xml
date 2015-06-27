@@ -64,6 +64,19 @@
 
         </activity>
 
+        <activity
+            android:name=".activity.DailyLawDisplayActivity"
+            android:label="@string/title_activity_bookmarks"
+            android:screenOrientation = "sensorPortrait"
+            android:parentActivityName=".activity.MainActivity" >
+            <intent-filter>
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+
+        </activity>
+
     </application>
 
 </manifest>

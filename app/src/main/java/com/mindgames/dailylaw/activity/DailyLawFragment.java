@@ -34,20 +34,29 @@ public class DailyLawFragment extends Fragment {
 
     @InjectView(R.id.button1) Button button1;
     @OnClick(R.id.button1) public void FIR() {
-        // showing pdf
-        CopyReadAssets("FIR.pdf");
+        Intent myIntent = new Intent(getActivity(), DailyLawDisplayActivity.class);
+        myIntent.putExtra("type", 1);
+        myIntent.putExtra("name", "Daily Law - FIR");
+
+        this.startActivity(myIntent);
     }
 
     @InjectView(R.id.button2) Button button2;
     @OnClick(R.id.button2) public void WOMEN() {
-        // showing pdf
-        CopyReadAssets("Women.pdf");
+        Intent myIntent = new Intent(getActivity(), DailyLawDisplayActivity.class);
+        myIntent.putExtra("type", 2);
+        myIntent.putExtra("name", "Daily Law - Women");
+
+        this.startActivity(myIntent);
     }
 
     @InjectView(R.id.button3) Button button3;
     @OnClick(R.id.button3) public void sayHello() {
-        // showing pdf
-        CopyReadAssets("Consumer.pdf");
+        Intent myIntent = new Intent(getActivity(), DailyLawDisplayActivity.class);
+        myIntent.putExtra("type", 3);
+        myIntent.putExtra("name", "Daily Law - Consumer");
+
+        this.startActivity(myIntent);
     }
 
     public DailyLawFragment() {
@@ -83,51 +92,5 @@ public class DailyLawFragment extends Fragment {
         super.onDetach();
     }
 
-    private void CopyReadAssets(String filename)
-    {
-        AssetManager assetManager = getActivity().getAssets();
 
-        InputStream in = null;
-        OutputStream out = null;
-        File file = new File(getActivity().getFilesDir(), filename);
-        try
-        {
-            in = assetManager.open(filename);
-            out = getActivity().openFileOutput(file.getName(), Context.MODE_WORLD_READABLE);
-
-            copyFile(in, out);
-            in.close();
-            in = null;
-            out.flush();
-            out.close();
-            out = null;
-        } catch (Exception e)
-        {
-            Log.e("tag", e.getMessage());
-        }
-
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setDataAndType(
-                Uri.parse("file://" + getActivity().getFilesDir() + "/" + filename),
-                "application/pdf");
-
-        try {
-            startActivity(intent);
-        }
-        catch (ActivityNotFoundException e) {
-            Toast.makeText(getActivity(),
-                    "No Application Available to View PDF",
-                    Toast.LENGTH_LONG).show();
-        }
-    }
-
-    private void copyFile(InputStream in, OutputStream out) throws IOException
-    {
-        byte[] buffer = new byte[1024];
-        int read;
-        while ((read = in.read(buffer)) != -1)
-        {
-            out.write(buffer, 0, read);
-        }
-    }
 }

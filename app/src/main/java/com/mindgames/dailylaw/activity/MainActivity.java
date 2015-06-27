@@ -43,7 +43,7 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
     ViewPager pager;
     ViewPagerAdapter adapter;
     SlidingTabLayout tabs;
-    CharSequence Titles[]={"Daily Law","Law Book", "Favorites"};
+    CharSequence Titles[]={"Daily Law","Bare Acts", "Favorites"};
     int Numboftabs =2;
 
     @Override
@@ -201,11 +201,11 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
             String backStateName = fragment.getClass().getName();
 
 
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.container_body, fragment);
-            //fragmentTransaction.addToBackStack(backStateName);
-            fragmentTransaction.commit();
+//            FragmentManager fragmentManager = getSupportFragmentManager();
+//            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//            fragmentTransaction.replace(R.id.container_body, fragment);
+//            //fragmentTransaction.addToBackStack(backStateName);
+//            fragmentTransaction.commit();
 
             //drawerFragment.mDrawerToggle.setDrawerIndicatorEnabled(false);
 

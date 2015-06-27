@@ -283,23 +283,4 @@ public class SearchResultsActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * Handling intent data
-     */
-    private void handleIntent(Intent intent) {
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            String query = intent.getStringExtra(SearchManager.QUERY);
-
-            /**
-             * Use this query to display search results like 
-             * 1. Getting the data from SQLite and showing in listview 
-             * 2. Making webrequest and displaying the data 
-             * For now we just display the query only
-             */
-            txtQuery.setText("Search Query: " + query);
-
-
-        }
-
-    }
 }

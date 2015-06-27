@@ -72,7 +72,6 @@ public class BookmarksActivity extends ActionBarActivity {
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         getSupportActionBar().setTitle(s);
 
-
         // get the listview
         expListView = (AnimatedExpandableListView) findViewById(R.id.lvExp);
 
