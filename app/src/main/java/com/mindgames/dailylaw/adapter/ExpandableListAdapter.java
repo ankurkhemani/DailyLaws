@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.mindgames.dailylaw.R;
 import com.mindgames.dailylaw.external.AnimatedExpandableListView;
 
-public class IPCListAdapter extends AnimatedExpandableListView.AnimatedExpandableListAdapter {
+public class ExpandableListAdapter extends AnimatedExpandableListView.AnimatedExpandableListAdapter {
 
 	private Context _context;
 //	private List<LawBook> _objects;
@@ -23,7 +23,7 @@ public class IPCListAdapter extends AnimatedExpandableListView.AnimatedExpandabl
 	// child data in format of header title, child title
 	private HashMap<String, List<String>> _listDataChild;
 
-	public IPCListAdapter(Context context, List<String> listDataHeader,
+	public ExpandableListAdapter(Context context, List<String> listDataHeader,
 								 HashMap<String, List<String>> listChildData) {
 		this._context = context;
 //		this._objects = objects;

@@ -20,7 +20,6 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -31,7 +30,7 @@ import android.widget.ToggleButton;
 
 import com.activeandroid.ActiveAndroid;
 import com.mindgames.dailylaw.R;
-import com.mindgames.dailylaw.adapter.IPCListAdapter;
+import com.mindgames.dailylaw.adapter.ExpandableListAdapter;
 import com.mindgames.dailylaw.external.AnimatedExpandableListView;
 import com.mindgames.dailylaw.external.TypeFaceSpan;
 import com.mindgames.dailylaw.model.FAQ;
@@ -57,8 +56,14 @@ public class DailyLawDisplayActivity extends ActionBarActivity {
     @InjectView(R.id.format)  Button format;
     @InjectView(R.id.relativeLayout) RelativeLayout relativeLayout;
 
-    private ListView listView;
     private int type;
+    ExpandableListAdapter listAdapter;
+    AnimatedExpandableListView expListView;
+    HashMap<Integer, List<FAQ>> Map;
+    int spinnerPosition =0;
+    List<String> listDataHeader;
+    HashMap<String, List<String>> listDataChild;
+
 
     @OnClick(R.id.format) public void WOMEN() {
         // showing pdf
@@ -109,33 +114,35 @@ public class DailyLawDisplayActivity extends ActionBarActivity {
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         getSupportActionBar().setTitle(s);
 
+        // set the view according to type of Daily Law
         handleType(type);
 
     }
 
     private void handleType(int type){
-
-        listView = (ListView) findViewById( R.id.listView );
-        FAQList = new ArrayList<FAQ>();
-        final ArrayList<String> listItems= new ArrayList<String>();
-        FAQList = FAQ.getFAQs(type);
+        // get the listview
+        expListView = (AnimatedExpandableListView) findViewById(R.id.lvExp);
+        expListView.setClickable(false);
+        expListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+                if (expListView.isGroupExpanded(groupPosition))
+                    expListView.collapseGroupWithAnimation(groupPosition);
+                else
+                    expListView.expandGroupWithAnimation(groupPosition);
+                return true;
+            }
+        });
 
         switch(type){
 
             case 1:
                 format.setVisibility(View.VISIBLE);
-                for(FAQ row : FAQList)
-                    listItems.add(row.Question);
-                if(FAQList.size()==0)
-                    listItems.add("Nothing to display .. ");
-
-
-                // Create ArrayAdapter
-                ArrayAdapter<String> listAdapter = new ArrayAdapter<String>
-                        (DailyLawDisplayActivity.this, R.layout.list_item, listItems);
-                // Set the ArrayAdapter as the ListView's adapter.
-                listView.setAdapter( listAdapter );
-
+                format.setText("FIR Format");
+                prepareListData(0);
+                listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
+                // setting list adapter
+                expListView.setAdapter(listAdapter);
                 break;
             case 2:
                 relativeLayout.setVisibility(View.VISIBLE);
@@ -160,6 +167,12 @@ public class DailyLawDisplayActivity extends ActionBarActivity {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
+                        prepareListData(position+1);
+
+                        listAdapter = new ExpandableListAdapter(DailyLawDisplayActivity.this, listDataHeader, listDataChild);
+                        // setting list adapter
+                        expListView.setAdapter(listAdapter);
+
                     }
 
                     @Override
@@ -171,51 +184,46 @@ public class DailyLawDisplayActivity extends ActionBarActivity {
                 break;
             case 3:
                 format.setVisibility(View.VISIBLE);
+                format.setText("Consumer Case Format");
+                prepareListData(0);
+                listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
+                // setting list adapter
+                expListView.setAdapter(listAdapter);
                 break;
-
         }
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                final Dialog alertDialog = new Dialog(DailyLawDisplayActivity.this);
-                alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+    }
 
-                alertDialog.setContentView(R.layout.display);
-                Button done = (Button)alertDialog.findViewById(R.id.done);
-                TextView dialogTitle = (TextView)alertDialog.findViewById(R.id.title);
-                TextView txtView = (TextView)alertDialog.findViewById(R.id.display);
+    /*
+     * Preparing the list data
+     */
+    private void prepareListData(int category) {
+        listDataHeader = new ArrayList<String>();
+        listDataChild = new HashMap<String, List<String>>();
+        FAQList = new ArrayList<FAQ>();
+        FAQList = FAQ.getFAQs(type, category);
 
-//                        Typeface typeface = Typeface.createFromAsset(getApplicationContext().getAssets(),
-//                                "fonts/alpha_echo.");
-//                        dialogTitle.setTypeface(typeface);
-                txtView.setTypeface(Typeface.SERIF);
+        HashMap<Integer, List<String>> chapMap = new HashMap<Integer, List<String>>();
 
-                String title = listItems.get(position);
-                String message = FAQList.get(position).Answer;
+        // Adding child data
+        List<String> childData = new ArrayList<String>();
 
-                txtView.setText(message);
 
-                final ToggleButton bookmark = (ToggleButton) alertDialog.findViewById(R.id.bookmark);
-                bookmark.setVisibility(View.GONE);
 
-                dialogTitle.setText(title);
-                alertDialog.show();
+        for(int i=0; i<FAQList.size(); i++){
+            listDataHeader.add(FAQList.get(i).Question);
+            childData.add(FAQList.get(i).Answer);
+        }
 
-                done.setOnClickListener(new View.OnClickListener() {
 
-                    @Override
-                    public void onClick(View v) {
-                        // TODO Auto-generated method stub
-                        // Log the user out
-                        alertDialog.dismiss();
-                    }
-                });
+        for(int i=0; i<FAQList.size(); i++){
+            listDataChild.put(listDataHeader.get(i), childData.subList(i,i+1)); // Header, Child data
+        }
 
-            }
-        });
 
     }
+
+
 
     private void CopyReadAssets(String filename)
     {

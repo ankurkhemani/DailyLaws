@@ -38,14 +38,27 @@
             android:prompt="@string/spinner_title" />
     </RelativeLayout>
 
-    <ListView android:layout_width="fill_parent"
+    <!--<ListView android:layout_width="fill_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_margin="5sp"-->
+        <!--android:background="#BCAAA4"-->
+        <!--android:layout_below="@+id/relativeLayout"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:id="@+id/listView">-->
+    <!--</ListView>-->
+
+    <com.mindgames.dailylaw.external.AnimatedExpandableListView
+        android:id="@+id/lvExp"
         android:layout_height="wrap_content"
-        android:layout_margin="5sp"
-        android:background="#BCAAA4"
+        android:layout_width="match_parent"
         android:layout_below="@+id/relativeLayout"
-        android:layout_marginTop="10dp"
-        android:id="@+id/listView">
-    </ListView>
+        android:layout_above="@+id/format"
+        android:dividerHeight="0.5dp"
+        android:divider="#A1887F"
+        android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft"
+        android:layout_margin="5sp">
+
+    </com.mindgames.dailylaw.external.AnimatedExpandableListView>
 
     <Button
         android:id="@+id/format"

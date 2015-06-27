@@ -25,16 +25,19 @@ public class FAQ extends Model {
     @Column(name = "Type")
     public int Type;
 
+    @Column(name = "Category")
+    public int Category;
+
     public FAQ() {
         // Notice how super() has been called to perform default initialization
         // of our Model subclass
         super();
     }
 
-    public static List<FAQ> getFAQs(int Type){
+    public static List<FAQ> getFAQs(int Type, int category){
         return new Select()
                 .from(FAQ.class)
-                .where("Type = ?", Type)
+                .where("Type = ? and Category=?", Type, category)
                 .execute();
 
     }

@@ -8,7 +8,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,7 +20,7 @@ import android.widget.ToggleButton;
 
 import com.activeandroid.ActiveAndroid;
 import com.mindgames.dailylaw.R;
-import com.mindgames.dailylaw.adapter.IPCListAdapter;
+import com.mindgames.dailylaw.adapter.ExpandableListAdapter;
 import com.mindgames.dailylaw.external.AnimatedExpandableListView;
 import com.mindgames.dailylaw.external.TypeFaceSpan;
 import com.mindgames.dailylaw.model.LawBook;
@@ -30,12 +29,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import me.drakeet.materialdialog.MaterialDialog;
-
 
 public class BookmarksActivity extends ActionBarActivity {
 
-    IPCListAdapter listAdapter;
+    ExpandableListAdapter listAdapter;
     AnimatedExpandableListView expListView;
     List<String> listDataHeader;
     HashMap<String, List<String>> listDataChild;
@@ -78,7 +75,7 @@ public class BookmarksActivity extends ActionBarActivity {
         // preparing list data
         prepareListData();
 
-        listAdapter = new IPCListAdapter(this, listDataHeader, listDataChild);
+        listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
 
         // setting list adapter
         expListView.setAdapter(listAdapter);

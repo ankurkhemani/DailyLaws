@@ -19,19 +19,17 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.mindgames.dailylaw.R;
-import com.mindgames.dailylaw.adapter.IPCListAdapter;
+import com.mindgames.dailylaw.adapter.ExpandableListAdapter;
 import com.mindgames.dailylaw.external.AnimatedExpandableListView;
 import com.mindgames.dailylaw.model.LawBook;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import me.drakeet.materialdialog.MaterialDialog;
-
 
 public class LawBookFragment extends Fragment {
 
-    IPCListAdapter listAdapter;
+    ExpandableListAdapter listAdapter;
     AnimatedExpandableListView expListView;
     HashMap<Integer, List<LawBook>> typeMap;
     int spinnerPosition =0, Type = 0;
@@ -92,7 +90,7 @@ public class LawBookFragment extends Fragment {
                             typeMap.clear();
                         Type = 0;
                         typeMap.putAll(MainActivity.ipcMap);
-                        listAdapter = new IPCListAdapter(getActivity(), MainActivity.listDataHeaderContainer.get(spinnerPosition), MainActivity.listDataChildContainer.get(spinnerPosition));
+                        listAdapter = new ExpandableListAdapter(getActivity(), MainActivity.listDataHeaderContainer.get(spinnerPosition), MainActivity.listDataChildContainer.get(spinnerPosition));
 
                         // setting list adapter
                         expListView.setAdapter(listAdapter);
@@ -104,7 +102,7 @@ public class LawBookFragment extends Fragment {
                             typeMap.clear();
                         Type = 1;
                         typeMap.putAll(MainActivity.crpcMap);
-                        listAdapter = new IPCListAdapter(getActivity(), MainActivity.listDataHeaderContainer.get(spinnerPosition), MainActivity.listDataChildContainer.get(spinnerPosition));
+                        listAdapter = new ExpandableListAdapter(getActivity(), MainActivity.listDataHeaderContainer.get(spinnerPosition), MainActivity.listDataChildContainer.get(spinnerPosition));
 
                         // setting list adapter
                         expListView.setAdapter(listAdapter);
@@ -115,7 +113,7 @@ public class LawBookFragment extends Fragment {
                             typeMap.clear();
                         Type = 2;
                         typeMap.putAll(MainActivity.cpcMap);
-                        listAdapter = new IPCListAdapter(getActivity(), MainActivity.listDataHeaderContainer.get(spinnerPosition), MainActivity.listDataChildContainer.get(spinnerPosition));
+                        listAdapter = new ExpandableListAdapter(getActivity(), MainActivity.listDataHeaderContainer.get(spinnerPosition), MainActivity.listDataChildContainer.get(spinnerPosition));
 
                         // setting list adapter
                         expListView.setAdapter(listAdapter);
@@ -125,7 +123,7 @@ public class LawBookFragment extends Fragment {
                             typeMap.clear();
                         Type = 3;
                         typeMap.putAll(MainActivity.evidenceMap);
-                        listAdapter = new IPCListAdapter(getActivity(), MainActivity.listDataHeaderContainer.get(spinnerPosition), MainActivity.listDataChildContainer.get(spinnerPosition));
+                        listAdapter = new ExpandableListAdapter(getActivity(), MainActivity.listDataHeaderContainer.get(spinnerPosition), MainActivity.listDataChildContainer.get(spinnerPosition));
 
                         // setting list adapter
                         expListView.setAdapter(listAdapter);
@@ -135,7 +133,7 @@ public class LawBookFragment extends Fragment {
                             typeMap.clear();
                         Type = 4;
                         typeMap.putAll(MainActivity.constitutionMap);
-                        listAdapter = new IPCListAdapter(getActivity(), MainActivity.listDataHeaderContainer.get(spinnerPosition), MainActivity.listDataChildContainer.get(spinnerPosition));
+                        listAdapter = new ExpandableListAdapter(getActivity(), MainActivity.listDataHeaderContainer.get(spinnerPosition), MainActivity.listDataChildContainer.get(spinnerPosition));
 
                         // setting list adapter
                         expListView.setAdapter(listAdapter);

@@ -45,7 +45,6 @@
             android:text="@string/hello_world"
             android:textIsSelectable="true"
             android:textSize="16sp"
-            android:autoLink="email|phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
