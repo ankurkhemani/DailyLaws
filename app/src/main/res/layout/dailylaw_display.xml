@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/bg"
     tools:context=".MainActivity">
 
     <LinearLayout
@@ -24,7 +25,7 @@
         android:layout_below="@+id/container_toolbar"
         android:layout_marginTop="10dp"
         android:visibility="gone"
-        android:background="#BCAAA4"
+        android:background="#60BCAAA4"
         android:layout_height="wrap_content">
 
         <!-- Spinner Element -->
@@ -54,7 +55,7 @@
         android:layout_below="@+id/relativeLayout"
         android:layout_above="@+id/format"
         android:dividerHeight="0.5dp"
-        android:divider="#A1887F"
+        android:divider="#30000000"
         android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft"
         android:layout_margin="5sp">
 

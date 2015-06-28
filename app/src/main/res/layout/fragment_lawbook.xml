@@ -39,7 +39,7 @@
         android:id="@+id/relativeLayout"
         android:layout_width="fill_parent"
         android:layout_margin="15dp"
-        android:background="#BCAAA4"
+        android:background="#60BCAAA4"
         android:layout_height="wrap_content">
 
     <!-- Spinner Element -->
@@ -59,7 +59,7 @@
             android:layout_width="match_parent"
             android:layout_below="@+id/relativeLayout"
             android:dividerHeight="0.5dp"
-            android:divider="#A1887F"
+            android:divider="#30000000"
             android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft"
             android:layout_margin="5dp">
 

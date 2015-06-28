@@ -12,9 +12,12 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 
 import com.activeandroid.ActiveAndroid;
@@ -286,6 +289,5 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
         listDataHeaderContainer.put(Type, listDataHeader);
         listDataChildContainer.put(Type, listDataChild);
     }
-
 
 }

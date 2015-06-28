@@ -3,7 +3,9 @@
     xmlns:card="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/rootView"
     android:orientation="vertical"
+    android:background="@drawable/bg"
     tools:context=".MainActivity">
 
     <LinearLayout
@@ -26,6 +28,7 @@
         android:layout_below="@+id/container_toolbar"
         android:layout_marginTop="10dp"
         android:textSize="20sp"
+        android:textColor="@color/textColorPrimary"
         android:text="Your Favorites in each category"
         android:textStyle="bold"/>
 
@@ -37,7 +40,7 @@
         android:layout_below="@+id/textView"
         android:layout_marginTop="10dp"
         android:dividerHeight="0.5dp"
-        android:divider="#A1887F"
+        android:divider="#30000000"
         android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft"
         android:layout_margin="5dp">
 

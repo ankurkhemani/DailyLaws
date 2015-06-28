@@ -8,8 +8,10 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -39,6 +41,12 @@ public class BookmarksActivity extends ActionBarActivity {
 
     HashMap<Integer,List<LawBook>> lawbook;
 
+    private static final int SWIPE_MIN_DISTANCE = 120;
+    private static final int SWIPE_MAX_OFF_PATH = 250;
+    private static final int SWIPE_THRESHOLD_VELOCITY = 200;
+    private GestureDetector gestureDetector;
+    View.OnTouchListener gestureListener;
+
     public BookmarksActivity() {
         // Required empty public constructor
     }
@@ -52,6 +60,9 @@ public class BookmarksActivity extends ActionBarActivity {
         ActiveAndroid.initialize(this);
 
         overridePendingTransition(R.anim.left_in, R.anim.left_out);
+
+        //Gesture Detection
+        gestureDetection();
 
         // get the action bar
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -302,4 +313,44 @@ public class BookmarksActivity extends ActionBarActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    class MyGestureDetector extends GestureDetector.SimpleOnGestureListener {
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            try {
+                if (Math.abs(e1.getY() - e2.getY()) > SWIPE_MAX_OFF_PATH)
+                    return false;
+                // right to left swipe
+                if(e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+                    Intent myIntent = new Intent(BookmarksActivity.this, SearchResultsActivity.class);
+                    BookmarksActivity.this.startActivity(myIntent);
+                }
+                // Left to Right swipe
+                else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+                    onBackPressed();
+                }
+            } catch (Exception e) {
+                // nothing
+            }
+            return false;
+        }
+        @Override
+        public boolean onDown(MotionEvent e) {
+            return true;
+        }
+    }
+
+    private void gestureDetection(){
+        gestureDetector = new GestureDetector(this, new MyGestureDetector());
+        gestureListener = new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+                return gestureDetector.onTouchEvent(event);
+            }
+        };
+
+        //Get the entire view and set gesture listener
+        View v = (View) findViewById(R.id.rootView);
+        v.setOnTouchListener(gestureListener);
+    }
+
 }

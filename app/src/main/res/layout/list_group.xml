@@ -3,7 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="#BCAAA4">
+    android:background="#50BCAAA4">
 
 
     <TextView
@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:paddingLeft="?android:attr/expandableListPreferredItemPaddingLeft"
         android:textSize="17dp"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/textColorPrimary"
         android:paddingTop="10dp"
         android:paddingBottom="10dp" />
 

@@ -15,6 +15,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:textSize="20sp"
+        android:textColor="@color/textColorPrimary"
         android:text="Know the common laws in your daily life."
         android:textStyle="bold"/>
 
