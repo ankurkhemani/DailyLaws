@@ -2,6 +2,7 @@ package com.mindgames.dailylaw.activity;
 
 import android.app.Dialog;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -167,11 +168,11 @@ public class LawBookFragment extends Fragment {
                 String message1 =
                         MainActivity.listDataChildContainer.get(spinnerPosition).get(
                         MainActivity.listDataHeaderContainer.get(spinnerPosition).get(groupPosition)).get(
-                        childPosition) + " - " + typeMap.get(groupPosition).get(childPosition).SectionDisplay;
+                        childPosition) + "\n\n" + typeMap.get(groupPosition).get(childPosition).SectionDisplay;
 
                 final Dialog alertDialog = new Dialog(getActivity());
                 alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-
+                alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
                 alertDialog.setContentView(R.layout.display);
                 Button done = (Button) alertDialog.findViewById(R.id.done);
                 TextView dialogTitle = (TextView) alertDialog.findViewById(R.id.title);
@@ -213,11 +214,11 @@ public class LawBookFragment extends Fragment {
                 }
 
                 if(bm==0) {
-                    bookmark.setTextOff("Add to Favorites");
+//                    bookmark.setTextOff("Add to Favorites");
                     bookmark.setChecked(false);
                 }
                 else {
-                    bookmark.setTextOn("Remove from Favorites");
+//                    bookmark.setTextOn("Remove from Favorites");
                     bookmark.setChecked(true);
                 }
 
@@ -226,10 +227,10 @@ public class LawBookFragment extends Fragment {
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                         if (isChecked) { // toggle is on
                             LawBook.updateBookmarks(Id, 1);
-                            bookmark.setTextOn("Remove from Favorites");
+//                            bookmark.setTextOn("Remove from Favorites");
                         } else { // toggle is off
                             LawBook.updateBookmarks(Id, 0);
-                            bookmark.setTextOff("Add to Favorites");
+//                            bookmark.setTextOff("Add to Favorites");
                         }
                     }
                 });

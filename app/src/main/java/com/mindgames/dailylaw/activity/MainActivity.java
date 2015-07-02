@@ -2,6 +2,8 @@ package com.mindgames.dailylaw.activity;
 
 
 import android.content.Intent;
+import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -94,12 +96,13 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        SpannableString s = new SpannableString("Indian Laws");
-        s.setSpan(new TypeFaceSpan(MainActivity.this, "alpha_echo.ttf"), 0, s.length(),
+        SpannableString s = new SpannableString("INDIAN LAWS");
+        s.setSpan(new TypeFaceSpan(MainActivity.this,"proxima_nova.otf" ), 0, s.length(),
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         // Update the action bar title with the TypefaceSpan instance
         getSupportActionBar().setTitle(s);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(R.color.Black_transparent_black_percent_70));
 
         drawerFragment = (FragmentDrawer)
                 getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
@@ -133,7 +136,7 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
         tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
             @Override
             public int getIndicatorColor(int position) {
-                return getResources().getColor(R.color.colorPrimaryDark);
+                return getResources().getColor(R.color.Black);
             }
         });
 

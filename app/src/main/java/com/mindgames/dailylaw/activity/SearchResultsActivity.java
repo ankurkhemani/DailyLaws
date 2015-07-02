@@ -1,23 +1,15 @@
 package com.mindgames.dailylaw.activity;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.app.Dialog;
-import android.app.SearchManager;
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.text.Spannable;
 import android.text.SpannableString;
-import android.util.Log;
 import android.view.GestureDetector;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -27,11 +19,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.mindgames.dailylaw.R;
@@ -39,13 +29,7 @@ import com.mindgames.dailylaw.external.TypeFaceSpan;
 import com.mindgames.dailylaw.model.LawBook;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
-
-import me.drakeet.materialdialog.MaterialDialog;
 
 
 public class SearchResultsActivity extends ActionBarActivity {
@@ -80,6 +64,8 @@ public class SearchResultsActivity extends ActionBarActivity {
 
         // Enabling Back navigation on Action Bar icon
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(R.color.Black_transparent_black_percent_70));
+
 
         //getSupportActionBar().setDisplayShowTitleEnabled(false);
 
@@ -123,6 +109,7 @@ public class SearchResultsActivity extends ActionBarActivity {
         searchView.setIconifiedByDefault(false);
         searchView.requestFocusFromTouch();
         searchView.hasFocus();
+        searchView.setBackgroundResource(R.drawable.custom_searchview);
 
 
         MenuItem searchViewItem = menu.findItem(R.id.action_search);
@@ -234,10 +221,10 @@ public class SearchResultsActivity extends ActionBarActivity {
                         }
 
                         if (bm == 0) {
-                            bookmark.setTextOff("Add to Favorites");
+//                            bookmark.setTextOff("Add to Favorites");
                             bookmark.setChecked(false);
                         } else {
-                            bookmark.setTextOn("Remove from Favorites");
+//                            bookmark.setTextOn("Remove from Favorites");
                             bookmark.setChecked(true);
                         }
 
@@ -246,10 +233,10 @@ public class SearchResultsActivity extends ActionBarActivity {
                             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                                 if (isChecked) { // toggle is on
                                     LawBook.updateBookmarks(Id, 1);
-                                    bookmark.setTextOn("Remove from Favorites");
+//                                    bookmark.setTextOn("Remove from Favorites");
                                 } else { // toggle is off
                                     LawBook.updateBookmarks(Id, 0);
-                                    bookmark.setTextOff("Add to Favorites");
+//                                    bookmark.setTextOff("Add to Favorites");
                                 }
                             }
                         });

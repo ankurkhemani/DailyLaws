@@ -1,15 +1,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#50D7CCC8">
+    android:background="@color/Black_transparent_black_percent_70">
 
 
     <RelativeLayout
         android:id="@+id/nav_header_container"
         android:layout_width="match_parent"
-        android:layout_height="140dp"
+        android:layout_height="100dp"
         android:layout_alignParentTop="true"
-        android:background="@color/colorPrimary">
+        android:background="@color/Orange">
 
         <ImageView
             android:layout_width="70dp"

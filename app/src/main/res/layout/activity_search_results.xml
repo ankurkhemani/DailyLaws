@@ -24,12 +24,13 @@
         android:layout_centerHorizontal="true"
         android:textColor="@color/textColorPrimary"
         android:layout_width="wrap_content"
+        android:textSize="16sp"
         android:padding = "5sp"
         android:layout_height="wrap_content" />
 
     <ListView android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp"
+        android:layout_margin="5dp"
         android:background="#20BCAAA4"
         android:layout_below="@+id/txtQuery"
         android:layout_marginTop="10dp"

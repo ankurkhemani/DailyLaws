@@ -148,7 +148,7 @@ public class DailyLawDisplayActivity extends ActionBarActivity {
                 relativeLayout.setVisibility(View.VISIBLE);
                 // Spinner Drop down elements
                 List<String> categories = new ArrayList<String>();
-                categories.add(" Protection Of Women From Domestic Violence Act, 2005");
+                categories.add("Protection Of Women From Domestic Violence Act, 2005");
                 categories.add("Dowry Prohibition Act, 1961");
                 categories.add("The Sexual Harassment Of Women At Workplace Act, 2013");
                 categories.add("Arrest Of Women");

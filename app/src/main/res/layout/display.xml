@@ -2,17 +2,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/windowBackground"
-    android:padding="2sp"
-    tools:context="com.mindgames.dailylaw.activity.IPCDisplay">
+    android:background="#F6F0E9"
+    android:layout_marginBottom="5dp"
+    android:layout_marginTop="5dp"
+    >
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5sp"
+        android:background="#faf7f4"
+        android:id="@+id/heading">
 
     <TextView
         android:id="@+id/title"
         android:text="@string/hello_world"
-        android:layout_width="match_parent"
-        android:background="@color/dailyLawButtonsColor"
+        android:layout_width="wrap_content"
+        android:textStyle="bold"
         android:textSize="18sp"
-        android:padding="2sp"
+        android:layout_toLeftOf="@+id/bookmark"
+        android:layout_alignParentLeft="true"
+        android:textColor="#9B866D"
+        android:paddingRight="5sp"
+        android:gravity="left"
         android:layout_alignParentTop="true"
         android:layout_height="wrap_content" />
 
@@ -20,23 +32,23 @@
 
     <ToggleButton
         android:id="@+id/bookmark"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:background="@drawable/custom_button"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/title"
+        android:layout_width="30sp"
+        android:layout_height="50sp"
+        android:background="@drawable/custom_bookmark"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="5sp"
+        android:textOff=""
+        android:textOn=""
+        />
 
-        android:layout_marginTop="5sp"/>
+    </RelativeLayout>
 
     <ScrollView
         android:id="@+id/scrollview"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/bookmark"
-        android:layout_above="@+id/done"
-        android:layout_marginBottom="5sp"
-
+        android:layout_height="350dp"
+        android:layout_below="@+id/heading"
+        android:layout_marginBottom="10sp"
         android:layout_marginTop="10sp"
         >
 
@@ -44,8 +56,9 @@
             android:id="@+id/display"
             android:text="@string/hello_world"
             android:textIsSelectable="true"
+            android:padding="5sp"
+            android:textColor="#9B866D"
             android:textSize="16sp"
-            android:autoLink="email|phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -54,10 +67,11 @@
     <Button
         android:id="@+id/done"
         android:text="DONE"
-        android:background="@drawable/custom_button"
-        android:layout_alignParentBottom="true"
+        android:background="@drawable/custom_done"
+        android:textColor="#F6F0E9"
         android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
+        android:layout_below="@+id/scrollview"
         android:layout_marginBottom="5sp"
         android:layout_height="wrap_content" />
 

@@ -4,12 +4,12 @@
         android:id="@+id/lblListItem"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textSize="17dip"
+        android:textSize="16sp"
         android:textColor="@color/textColorPrimary"
         android:autoLink="email|phone"
-        android:paddingTop="10dp"
+        android:paddingTop="12dp"
         android:background="#20BCAAA4"
-        android:paddingBottom="10dp"
+        android:paddingBottom="12dp"
         android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft" />
 
 

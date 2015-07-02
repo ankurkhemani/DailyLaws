@@ -152,10 +152,10 @@ public class BookmarksActivity extends ActionBarActivity {
                     }
 
                     if (bm == 0) {
-                        bookmark.setTextOff("Add to Favorites");
+//                        bookmark.setTextOff("Add to Favorites");
                         bookmark.setChecked(false);
                     } else {
-                        bookmark.setTextOn("Remove from Favorites");
+//                        bookmark.setTextOn("Remove from Favorites");
                         bookmark.setChecked(true);
                     }
 
@@ -164,10 +164,10 @@ public class BookmarksActivity extends ActionBarActivity {
                         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                             if (isChecked) { // toggle is on
                                 LawBook.updateBookmarks(Id, 1);
-                                bookmark.setTextOn("Remove from Favorites");
+//                                bookmark.setTextOn("Remove from Favorites");
                             } else { // toggle is off
                                 LawBook.updateBookmarks(Id, 0);
-                                bookmark.setTextOff("Add to Favorites");
+//                                bookmark.setTextOff("Add to Favorites");
                             }
                         }
                     });
