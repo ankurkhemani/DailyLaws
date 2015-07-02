@@ -35,7 +35,7 @@ public class FragmentDrawer extends Fragment {
     private static String[] titles = null;
     private FragmentDrawerListener drawerListener;
 
-    public FragmentDrawer() {
+public FragmentDrawer() {
 
     }
 
@@ -46,11 +46,15 @@ public class FragmentDrawer extends Fragment {
     public static List<NavDrawerItem> getData() {
         List<NavDrawerItem> data = new ArrayList<>();
 
+        int[] imageIds = {R.drawable.bookmarkdrawer,R.drawable.aboutdrawer,
+                R.drawable.feedbackdrawer, R.drawable.disclaimerdrawer};
+
 
         // preparing navigation drawer items
         for (int i = 0; i < titles.length; i++) {
             NavDrawerItem navItem = new NavDrawerItem();
             navItem.setTitle(titles[i]);
+            navItem.setImage(imageIds[i]);
             data.add(navItem);
         }
         return data;

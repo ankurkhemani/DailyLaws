@@ -180,23 +180,19 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
 
     private void displayView(int position) {
         Fragment fragment = null;
-        String title = getString(R.string.app_name);
         switch (position) {
 
             case 0:
-                fragment = new DailyLawFragment();
-                title = getString(R.string.title_home);
-                break;
-            case 1:
-                fragment = new LawBookFragment();
-                title = getString(R.string.title_lawbook);
-                break;
-            case 2:
                 Intent myIntent = new Intent(MainActivity.this, BookmarksActivity.class);
                 this.startActivity(myIntent);
+                break;
+            case 1:
+
+                break;
+            case 2:
+                break;
             case 3:
-                fragment = new MessagesFragment();
-                title = getString(R.string.title_settings);
+
                 break;
 
             default:

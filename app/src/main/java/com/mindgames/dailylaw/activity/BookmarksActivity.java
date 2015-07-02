@@ -3,6 +3,7 @@ package com.mindgames.dailylaw.activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
@@ -75,10 +76,12 @@ public class BookmarksActivity extends ActionBarActivity {
 
 
         //font change
-        SpannableString s = new SpannableString("Bookmarks");
-        s.setSpan(new TypeFaceSpan(BookmarksActivity.this, "alpha_echo.ttf"), 0, s.length(),
+        SpannableString s = new SpannableString("BOOKMARKS");
+        s.setSpan(new TypeFaceSpan(BookmarksActivity.this, "proxima_nova.otf"), 0, s.length(),
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         getSupportActionBar().setTitle(s);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(R.color.Black_transparent_black_percent_70));
+
 
         // get the listview
         expListView = (AnimatedExpandableListView) findViewById(R.id.lvExp);
@@ -102,6 +105,7 @@ public class BookmarksActivity extends ActionBarActivity {
                 if(lawbook.get(groupPosition).size()!=0) {
                     final Dialog alertDialog = new Dialog(BookmarksActivity.this);
                     alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
                     alertDialog.setContentView(R.layout.display);
                     Button done = (Button) alertDialog.findViewById(R.id.done);
@@ -115,9 +119,13 @@ public class BookmarksActivity extends ActionBarActivity {
 
                     String message1;
                     if (groupPosition != 4)
-                        message1 = "Section " + lawbook.get(groupPosition).get(childPosition).SectionNumber + " - " + lawbook.get(groupPosition).get(childPosition).SectionDisplay;
+                        message1 = "Section " + lawbook.get(groupPosition).get(childPosition).SectionNumber + "\n" +
+                                lawbook.get(groupPosition).get(childPosition).SectionParticulars + "\n\n"
+                                + lawbook.get(groupPosition).get(childPosition).SectionDisplay;
                     else
-                        message1 = "Part " + lawbook.get(groupPosition).get(childPosition).SectionNumber + " - " + lawbook.get(groupPosition).get(childPosition).SectionDisplay;
+                        message1 = "Part " + lawbook.get(groupPosition).get(childPosition).SectionNumber + "\n" +
+                                lawbook.get(groupPosition).get(childPosition).SectionParticulars + "\n\n"
+                                + lawbook.get(groupPosition).get(childPosition).SectionDisplay;
 
                     txtView.setText(message1);
 

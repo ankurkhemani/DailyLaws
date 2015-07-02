@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -13,8 +14,10 @@ import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -64,6 +67,12 @@ public class DailyLawDisplayActivity extends ActionBarActivity {
     List<String> listDataHeader;
     HashMap<String, List<String>> listDataChild;
 
+    private static final int SWIPE_MIN_DISTANCE = 120;
+    private static final int SWIPE_MAX_OFF_PATH = 250;
+    private static final int SWIPE_THRESHOLD_VELOCITY = 200;
+    private GestureDetector gestureDetector;
+    View.OnTouchListener gestureListener;
+
 
     @OnClick(R.id.format) public void WOMEN() {
         // showing pdf
@@ -86,6 +95,9 @@ public class DailyLawDisplayActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dailylaw_display);
 
+        //Gesture Detection
+        gestureDetection();
+
         //initialize ActiveAndroid
         ActiveAndroid.initialize(this);
 
@@ -102,7 +114,7 @@ public class DailyLawDisplayActivity extends ActionBarActivity {
 
         // Enabling Back navigation on Action Bar icon
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(R.color.Black_transparent_black_percent_70));
 
         //get type and name of Daily Law
         type = getIntent().getIntExtra("type", 1);
@@ -138,7 +150,7 @@ public class DailyLawDisplayActivity extends ActionBarActivity {
 
             case 1:
                 format.setVisibility(View.VISIBLE);
-                format.setText("FIR Format");
+                format.setText("Format");
                 prepareListData(0);
                 listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
                 // setting list adapter
@@ -184,7 +196,7 @@ public class DailyLawDisplayActivity extends ActionBarActivity {
                 break;
             case 3:
                 format.setVisibility(View.VISIBLE);
-                format.setText("Consumer Case Format");
+                format.setText("Format");
                 prepareListData(0);
                 listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
                 // setting list adapter
@@ -309,5 +321,44 @@ public class DailyLawDisplayActivity extends ActionBarActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    class MyGestureDetector extends GestureDetector.SimpleOnGestureListener {
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            try {
+                if (Math.abs(e1.getY() - e2.getY()) > SWIPE_MAX_OFF_PATH)
+                    return false;
+                // right to left swipe
+                if(e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+                    Intent myIntent = new Intent(DailyLawDisplayActivity.this, SearchResultsActivity.class);
+                    DailyLawDisplayActivity.this.startActivity(myIntent);
+                }
+                // Left to Right swipe
+                else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+                    onBackPressed();
+                }
+            } catch (Exception e) {
+                // nothing
+            }
+            return false;
+        }
+        @Override
+        public boolean onDown(MotionEvent e) {
+            return true;
+        }
+    }
+
+    private void gestureDetection(){
+        gestureDetector = new GestureDetector(this, new MyGestureDetector());
+        gestureListener = new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+                return gestureDetector.onTouchEvent(event);
+            }
+        };
+
+        //Get the entire view and set gesture listener
+        View v = (View) findViewById(R.id.rootView);
+        v.setOnTouchListener(gestureListener);
     }
 }

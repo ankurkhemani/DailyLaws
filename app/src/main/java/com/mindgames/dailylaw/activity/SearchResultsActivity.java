@@ -71,7 +71,7 @@ public class SearchResultsActivity extends ActionBarActivity {
 
         //font change
         SpannableString s = new SpannableString("Search");
-        s.setSpan(new TypeFaceSpan(SearchResultsActivity.this, "alpha_echo.ttf"), 0, s.length(),
+        s.setSpan(new TypeFaceSpan(SearchResultsActivity.this, "proxima_nova.otf"), 0, s.length(),
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         getSupportActionBar().setTitle(s);
 
@@ -171,6 +171,8 @@ public class SearchResultsActivity extends ActionBarActivity {
                     public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                         final Dialog alertDialog = new Dialog(SearchResultsActivity.this);
                         alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
 
                         alertDialog.setContentView(R.layout.display);
                         Button done = (Button)alertDialog.findViewById(R.id.done);
@@ -184,9 +186,13 @@ public class SearchResultsActivity extends ActionBarActivity {
 
                         String message1;
                         if (searchList.get(position).Type != 4)
-                            message1 = "Section " + searchList.get(position).SectionNumber + " - " + searchList.get(position).SectionDisplay;
+                            message1 = "Section " + searchList.get(position).SectionNumber + "\n" +
+                                    searchList.get(position).SectionParticulars + "\n\n"
+                                    + searchList.get(position).SectionDisplay;
                         else
-                            message1 = "Part " + searchList.get(position).SectionNumber + " - " + searchList.get(position).SectionDisplay;
+                            message1 = "Part " + searchList.get(position).SectionNumber + "\n" +
+                                    searchList.get(position).SectionParticulars + "\n\n"
+                                    + searchList.get(position).SectionDisplay;
 
                         txtView.setText(message1);
 

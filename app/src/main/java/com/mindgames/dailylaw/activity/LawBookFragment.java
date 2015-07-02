@@ -34,7 +34,6 @@ public class LawBookFragment extends Fragment {
     AnimatedExpandableListView expListView;
     HashMap<Integer, List<LawBook>> typeMap;
     int spinnerPosition =0, Type = 0;
-    DisplayFragment displayFragment;
     android.support.v4.app.FragmentTransaction ft;
 
     public LawBookFragment() {
