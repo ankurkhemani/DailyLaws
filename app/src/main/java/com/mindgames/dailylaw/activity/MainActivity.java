@@ -56,7 +56,7 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
     ViewPager pager;
     ViewPagerAdapter adapter;
     SlidingTabLayout tabs;
-    CharSequence Titles[]={"Daily Law","Bare Acts"};
+    CharSequence Titles[]={"Daily Law","Bare Acts", ""};
     int Numboftabs =2;
 
     @Override
