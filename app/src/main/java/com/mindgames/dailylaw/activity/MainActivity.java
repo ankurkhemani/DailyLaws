@@ -1,10 +1,14 @@
 package com.mindgames.dailylaw.activity;
 
 
+import android.app.Dialog;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -15,10 +19,14 @@ import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.view.GestureDetector;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -48,7 +56,7 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
     ViewPager pager;
     ViewPagerAdapter adapter;
     SlidingTabLayout tabs;
-    CharSequence Titles[]={"Daily Law","Bare Acts", "Favorites"};
+    CharSequence Titles[]={"Daily Law","Bare Acts"};
     int Numboftabs =2;
 
     @Override
@@ -180,6 +188,10 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
 
     private void displayView(int position) {
         Fragment fragment = null;
+        final Dialog alertDialog = new Dialog(MainActivity.this);
+        alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
         switch (position) {
 
             case 0:
@@ -190,8 +202,88 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
 
                 break;
             case 2:
+                alertDialog.setContentView(R.layout.feedback);
+                Button done = (Button) alertDialog.findViewById(R.id.done);
+                Button rate = (Button) alertDialog.findViewById(R.id.rate);
+                Button suggestions = (Button) alertDialog.findViewById(R.id.suggestions);
+
+                rate.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        Uri uri = Uri.parse("market://details?id=" + getApplicationContext().getPackageName());                        Intent i = new Intent(Intent.ACTION_VIEW, uri);
+                        try
+                        {
+                            startActivity(i);
+                            overridePendingTransition(R.anim.left_in,R.anim.left_out);
+
+                        }
+                        catch (ActivityNotFoundException e)
+                        {
+                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + getApplicationContext().getPackageName())));
+                            //Toast.makeText(getApplicationContext(), "Sorry, unable to reach the Play Store!", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
+
+                suggestions.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                                "mailto", "dailylaw@gmail.com", null));
+                        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Suggestions - Indians Laws App");
+                        startActivity(Intent.createChooser(emailIntent, null));
+
+                    }
+                });
+
+                done.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alertDialog.dismiss();
+
+//                        View customToastroot =getLayoutInflater().inflate(R.layout.custom_toast, null);
+//
+//                        Toast toast = Toast.makeText(MainActivity.this, "Added to bookmarks.. ", Toast.LENGTH_SHORT );
+//                        toast.setView(customToastroot);
+//
+//                        TextView text = (TextView) customToastroot.findViewById(R.id.text);
+//                        text.setText("Added to Bookmarks .. ");
+//
+//                        toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL,0, 0);                        toast.setView(customToastroot);
+//                        toast.show();
+                    }
+                });
+
+                alertDialog.show();
+
                 break;
             case 3:
+                alertDialog.setContentView(R.layout.disclaimer);
+                Button done1 = (Button) alertDialog.findViewById(R.id.done);
+
+                done1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alertDialog.dismiss();
+                    }
+                });
+
+                new CountDownTimer(150, 150) {
+                    public void onTick(long millisUntilFinished) {
+
+
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        // TODO Auto-generated method stub
+                        alertDialog.show();
+                    }
+
+
+                }.start();
 
                 break;
 

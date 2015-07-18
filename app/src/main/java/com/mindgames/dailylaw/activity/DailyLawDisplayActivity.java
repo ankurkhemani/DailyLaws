@@ -78,10 +78,13 @@ public class DailyLawDisplayActivity extends ActionBarActivity {
         // showing pdf
         switch(type) {
             case 1:
-                CopyReadAssets("ConsumerFormat.pdf");
+                CopyReadAssets("FIRFormat.pdf");
                 break;
             case 3:
                 CopyReadAssets("ConsumerFormat.pdf");
+                break;
+            case 4:
+                CopyReadAssets("RTIFormat.pdf");
                 break;
         }
     }
@@ -122,7 +125,7 @@ public class DailyLawDisplayActivity extends ActionBarActivity {
 
         //font change
         SpannableString s = new SpannableString(name);
-        s.setSpan(new TypeFaceSpan(DailyLawDisplayActivity.this, "alpha_echo.ttf"), 0, s.length(),
+        s.setSpan(new TypeFaceSpan(DailyLawDisplayActivity.this, "proxima_nova.otf"), 0, s.length(),
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         getSupportActionBar().setTitle(s);
 
@@ -197,6 +200,14 @@ public class DailyLawDisplayActivity extends ActionBarActivity {
             case 3:
                 format.setVisibility(View.VISIBLE);
                 format.setText("Format");
+                prepareListData(0);
+                listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
+                // setting list adapter
+                expListView.setAdapter(listAdapter);
+                break;
+            case 4:
+                format.setVisibility(View.VISIBLE);
+                format.setText("RTI Format");
                 prepareListData(0);
                 listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
                 // setting list adapter

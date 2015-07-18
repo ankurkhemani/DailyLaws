@@ -50,11 +50,20 @@ public class DailyLawFragment extends Fragment {
         this.startActivity(myIntent);
     }
 
-    @InjectView(R.id.button3) Button button3;
-    @OnClick(R.id.button3) public void sayHello() {
+    @InjectView(R.id.button3) Button button4;
+    @OnClick(R.id.button3) public void CONSUMER() {
         Intent myIntent = new Intent(getActivity(), DailyLawDisplayActivity.class);
         myIntent.putExtra("type", 3);
         myIntent.putExtra("name", "Daily Law - Consumer");
+
+        this.startActivity(myIntent);
+    }
+
+    @InjectView(R.id.button4) Button button3;
+    @OnClick(R.id.button4) public void OTHER() {
+        Intent myIntent = new Intent(getActivity(), DailyLawDisplayActivity.class);
+        myIntent.putExtra("type", 4);
+        myIntent.putExtra("name", "Daily Law - Other");
 
         this.startActivity(myIntent);
     }

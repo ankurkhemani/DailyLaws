@@ -1,6 +1,7 @@
 package com.mindgames.dailylaw.activity;
 
 import android.app.Dialog;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ListView;
@@ -28,6 +30,7 @@ import com.mindgames.dailylaw.R;
 import com.mindgames.dailylaw.external.TypeFaceSpan;
 import com.mindgames.dailylaw.model.LawBook;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -103,13 +106,29 @@ public class SearchResultsActivity extends ActionBarActivity {
         // Associate searchable configuration with the SearchView
         SearchView searchView = (SearchView) menu.findItem(R.id.action_search)
                 .getActionView();
+        searchView.setBackgroundResource(R.drawable.custom_searchview);
         //searchView.setQueryHint("Enter section number .. ");
         searchView.setInputType(InputType.TYPE_CLASS_NUMBER);
         searchView.setFocusable(true);
         searchView.setIconifiedByDefault(false);
         searchView.requestFocusFromTouch();
-        searchView.hasFocus();
-        searchView.setBackgroundResource(R.drawable.custom_searchview);
+
+        //removing blue underline
+        int searchPlateId = searchView.getContext().getResources()
+                .getIdentifier("android:id/search_plate", null, null);
+        View searchPlateView = searchView.findViewById(searchPlateId);
+        if (searchPlateView != null) {
+            searchPlateView.setBackgroundColor(Color.TRANSPARENT);
+        }
+
+        //changing cursor color
+        final int textViewID = searchView.getContext().getResources().getIdentifier("android:id/search_src_text",null, null);
+        final AutoCompleteTextView searchTextView = (AutoCompleteTextView) searchView.findViewById(textViewID);
+        try {
+            Field mCursorDrawableRes = TextView.class.getDeclaredField("mCursorDrawableRes");
+            mCursorDrawableRes.setAccessible(true);
+            mCursorDrawableRes.set(searchTextView, 0); //This sets the cursor resource ID to 0 or @null which will make it visible on white background
+        } catch (Exception e) {}
 
 
         MenuItem searchViewItem = menu.findItem(R.id.action_search);
@@ -161,7 +180,7 @@ public class SearchResultsActivity extends ActionBarActivity {
                 }
 
                 // Create ArrayAdapter
-                ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(SearchResultsActivity.this, R.layout.list_item, listItems);
+                ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(SearchResultsActivity.this, R.layout.search_item, listItems);
 
                 // Set the ArrayAdapter as the ListView's adapter.
                 listView.setAdapter( listAdapter );
