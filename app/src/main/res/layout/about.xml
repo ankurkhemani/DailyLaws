@@ -1,0 +1,84 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerVertical="true"
+    android:background="#F6F0E9"
+    >
+
+
+
+    <TextView
+        android:id="@+id/tv1"
+        android:text="ABOUT"
+        android:layout_width="wrap_content"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:textColor="#9B866D"
+        android:gravity="center"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        />
+
+
+
+        <ScrollView
+            android:id="@+id/sv"
+            android:layout_below="@+id/tv1"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_height="350dp">
+
+                <TextView
+                    android:id="@+id/tv2"
+                    android:text="Daily Law (as the name suggests) focuses on informing the Mango People (Aam Janta) of India about the prevailing laws which surrounds their every day life. Besides, this app comes in very handy for students pursuing Law and for lawyers in their professional workspace.
+\n\nKeeping in mind the ‘The Power of a Common Man’, the app covers three main sections viz FIR, WOMEN and CONSUMER with all practicable ways to get relief without hassle. Legal Formats are also attached wherever needed, so that the user just has to fill facts and set the machinery in motion without incurring expenditure on legal fees.
+\n\nFEATURES OF THIS APP
+\n\n# This is the first Law based app to get a very pleasing User Interface that will make you fall in love with the app shortly. Easy Navigation and Search provides an icing on the cake.
+\n\n# You get a concise yet very procedural classification of laws which surround your daily life. You will never stay in oblivion with this app in your pocket.
+\n\n# The app covers following major ‘BARE ACTS’ of Indian Laws, all in one place:
+\n-	Indian Penal Code, 1860 (IPC)
+\n-	Code of Criminal Procedure, 1973 (CPC)
+\n-	Code of Civil Procedure, 1908 (CrPC)
+\n-	Evidence Act, 1872
+\n-	Constitution of India, 1949
+\n\n# This app has a very user friendly ‘SEARCH’ mechanism when it comes to ‘Bare Acts’. The user just has to type the section number and automatically all acts pertaining to that section will be displayed.
+\n\n# You can ‘BOOKMARK’ any section of a Chapter or an Article which you need to visit frequently. This allows you to access this section easily for future use ( in the ‘bookmarks’ section of the app).
+\n\n# You can access all the data even when you are OFFLINE. This means you have your law books by you when you are on a flight or relaxing on a beach.
+\n\n- - - - - - - - - - - - -
+\n\nWe encourage suggestions and feedback. Please use the ‘FEEDBACK’ section in the app to write us back. We will try and incorporate every good suggestion ☺\n"
+
+
+                    android:padding="5dp"
+                    android:textColor="#9B866D"
+                    android:textSize="16sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+        </ScrollView>
+
+
+        <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/sv"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:id="@+id/rl1">
+            <Button
+                android:id="@+id/done"
+                android:text="DONE"
+                android:background="@android:color/transparent"
+                android:textColor="@color/year"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_marginBottom="5sp"
+                android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+
+
+</RelativeLayout>

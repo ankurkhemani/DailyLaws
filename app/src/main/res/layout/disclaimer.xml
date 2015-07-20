@@ -13,7 +13,7 @@
         android:text="DISCLAIMER"
         android:layout_width="wrap_content"
         android:textStyle="bold"
-        android:textSize="18sp"
+        android:textSize="20sp"
         android:textColor="#9B866D"
         android:gravity="center"
         android:paddingLeft="20dp"
@@ -35,7 +35,7 @@
                 <TextView
                     android:id="@+id/tv2"
                     android:text="By using this app, you agree to the following terms:\n\nThis application does not intend to provide any legal service of any kind. Every effort has been taken to verify the authenticity of information supplied in this application which may be taken from third party sites and if any such information is wrong the developers of this app do not taken any responsibility for the same.\n\nThough every effort has been taken to address the problems of daily legal issues but this app cannot replace the expertise of lawyer/advocate in legal domain. The developers of this application cannot be made liable for any loss (if happened) due to the information supplied in this application.\n\nEnjoy the Application!"
-                    android:padding="5sp"
+                    android:padding="5dp"
                     android:textColor="#9B866D"
                     android:textSize="16sp"
                     android:layout_width="wrap_content"

@@ -10,7 +10,7 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="5sp"
+        android:padding="5dp"
         android:layout_alignParentTop="true"
         android:background="#faf7f4"
         android:id="@+id/heading">
@@ -24,7 +24,7 @@
         android:layout_toLeftOf="@+id/bookmark"
         android:layout_alignParentLeft="true"
         android:textColor="#9B866D"
-        android:paddingRight="5sp"
+        android:paddingRight="5dp"
         android:gravity="center"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true" />
@@ -33,11 +33,11 @@
 
     <ToggleButton
         android:id="@+id/bookmark"
-        android:layout_width="30sp"
-        android:layout_height="50sp"
+        android:layout_width="30dp"
+        android:layout_height="50dp"
         android:background="@drawable/custom_bookmark"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="5sp"
+        android:layout_marginRight="5dp"
         android:textOff=""
         android:textOn=""
         />
@@ -49,7 +49,7 @@
         android:layout_width="wrap_content"
         android:layout_height="350dp"
         android:layout_below="@+id/heading"
-        android:paddingTop="10sp"
+        android:paddingTop="10dp"
         >
 
         <TextView
@@ -58,8 +58,8 @@
             android:textIsSelectable="true"
             android:textColor="#9B866D"
             android:textSize="16sp"
-            android:paddingLeft="5sp"
-            android:paddingRight="5sp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -75,8 +75,8 @@
         android:layout_width="wrap_content"
         android:layout_below="@+id/scrollview"
         android:textSize="12sp"
-        android:layout_marginTop="5sp"
-        android:layout_marginBottom="5sp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:layout_height="40dp" />
 
 </RelativeLayout>

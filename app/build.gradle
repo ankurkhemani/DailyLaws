@@ -1,14 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 21
+    compileSdkVersion 22
     apply plugin: 'eclipse'
     buildToolsVersion "21.1.2"
 
     defaultConfig {
         applicationId "com.mindgames.dailylaw"
         minSdkVersion 15
-        targetSdkVersion 21
+        targetSdkVersion 22
         versionCode 1
         versionName "1.0"
     }
@@ -47,14 +47,17 @@ dependencies {
     compile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
 
     //Android Bootstrap
-    compile 'com.beardedhen:androidbootstrap:+'
-
-    //Core cardslib
-    compile 'com.github.gabrielemariotti.cards:cardslib-core:2.1.0'
-    //Optional for built-in cards
-    compile 'com.github.gabrielemariotti.cards:cardslib-cards:2.1.0'
-
+//    compile 'com.beardedhen:androidbootstrap:+'
+//
+//    //Core cardslib
+//    compile 'com.github.gabrielemariotti.cards:cardslib-core:2.1.0'
+//    //Optional for built-in cards
+//    compile 'com.github.gabrielemariotti.cards:cardslib-cards:2.1.0'
+//
     //MaterialDialog
     compile 'me.drakeet.materialdialog:library:1.2.2'
+
+    //app rater
+    compile files('libs/AppRater.jar')
 
 }

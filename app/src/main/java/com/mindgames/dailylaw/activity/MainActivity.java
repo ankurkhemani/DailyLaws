@@ -39,8 +39,13 @@ import com.mindgames.dailylaw.model.Chapters;
 import com.mindgames.dailylaw.model.LawBook;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+
+
+import im.delight.apprater.AppRater;
+import me.drakeet.materialdialog.MaterialDialog;
 
 
 public class MainActivity extends ActionBarActivity implements FragmentDrawer.FragmentDrawerListener {
@@ -61,26 +66,24 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-//        final MaterialDialog mMaterialDialog = new MaterialDialog(getActivity()).setContentView(view);
-//        mMaterialDialog.setTitle("Exit")
-//                .setMessage("")
-//                .setPositiveButton("DONE", new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        mMaterialDialog.dismiss();
-//                    }
-//                });
-////                        .setNegativeButton("CANCEL", new View.OnClickListener() {
-////                            @Override
-////                            public void onClick(View v) {
-////                                mMaterialDialog.dismiss();
-////                            }
-////                        });
-//        mMaterialDialog.setCanceledOnTouchOutside(false);
-//        mMaterialDialog.show();
-    }
+        final MaterialDialog mMaterialDialog = new MaterialDialog(this);
+        mMaterialDialog.setTitle("Exit?")
+                .setMessage("Are you sure that you want to leave this app?")
+                .setPositiveButton("Yes", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        finish();
+                    }
+                })
+                .setNegativeButton("No", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mMaterialDialog.dismiss();
+                    }
+                });
 
+        mMaterialDialog.show();
+    }
 
 
     @Override
@@ -90,6 +93,12 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
 
         //initialize ActiveAndroid
         ActiveAndroid.initialize(this);
+
+        AppRater appRater = new AppRater(this);
+        appRater.setDaysBeforePrompt(1);
+        appRater.setLaunchesBeforePrompt(3);
+        appRater.setPhrases("Rate this app", "Please take a moment to rate this app!", "Rate now", "Later", "No, thanks");
+        appRater.show();
 
         // preparing list data
         initializeVariables();
@@ -176,6 +185,23 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
                 this.startActivity(myIntent);
                 return true;
 
+            case R.id.menu_item_share:
+                try
+                { Intent i = new Intent(Intent.ACTION_SEND);
+                    i.setType("text/plain");
+                    i.putExtra(Intent.EXTRA_SUBJECT, "Daily Law");
+                    String sAux = "\nCheck out this cool Android App that spreads " +
+                            "awareness of useful everyday Indian Laws in layman terms!\n\n";
+                    sAux = sAux + "https://play.google.com/store/apps/details?id="
+                            + getApplicationContext().getPackageName() + "\n\n";
+                    i.putExtra(Intent.EXTRA_TEXT, sAux);
+                    startActivity(Intent.createChooser(i, "Choose One"));
+                    return true;
+                }
+                catch(Exception e)
+                { //e.toString();
+                }
+
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -199,6 +225,17 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
                 this.startActivity(myIntent);
                 break;
             case 1:
+                alertDialog.setContentView(R.layout.about);
+                Button done1 = (Button) alertDialog.findViewById(R.id.done);
+
+                done1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alertDialog.dismiss();
+                    }
+                });
+
+                alertDialog.show();
 
                 break;
             case 2:
@@ -261,29 +298,30 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
                 break;
             case 3:
                 alertDialog.setContentView(R.layout.disclaimer);
-                Button done1 = (Button) alertDialog.findViewById(R.id.done);
+                Button done2 = (Button) alertDialog.findViewById(R.id.done);
 
-                done1.setOnClickListener(new View.OnClickListener() {
+                done2.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         alertDialog.dismiss();
                     }
                 });
 
-                new CountDownTimer(150, 150) {
-                    public void onTick(long millisUntilFinished) {
-
-
-                    }
-
-                    @Override
-                    public void onFinish() {
-                        // TODO Auto-generated method stub
-                        alertDialog.show();
-                    }
-
-
-                }.start();
+                alertDialog.show();
+//                new CountDownTimer(150, 150) {
+//                    public void onTick(long millisUntilFinished) {
+//
+//
+//                    }
+//
+//                    @Override
+//                    public void onFinish() {
+//                        // TODO Auto-generated method stub
+//
+//                    }
+//
+//
+//                }.start();
 
                 break;
 

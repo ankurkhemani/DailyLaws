@@ -7,6 +7,7 @@
         android:textSize="16sp"
         android:textColor="@color/textColorPrimary"
         android:autoLink="email|phone|web"
+        android:textColorLink="@color/Blue_DeepSkyBlue"
         android:paddingTop="10dp"
         android:background="#20BCAAA4"
         android:paddingBottom="10dp"
