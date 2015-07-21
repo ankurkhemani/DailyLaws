@@ -34,7 +34,7 @@
 
                 <TextView
                     android:id="@+id/tv2"
-                    android:text="Daily Law (as the name suggests) focuses on informing the Mango People (Aam Janta) of India about the prevailing laws which surrounds their every day life. Besides, this app comes in very handy for students pursuing Law and for lawyers in their professional workspace.
+                    android:text="Daily Laws (as the name suggests) focuses on informing the Mango People (Aam Janta) of India about the prevailing laws which surrounds their every day life. Besides, this app comes in very handy for students pursuing Law and for lawyers in their professional workspace.
 \n\nKeeping in mind the ‘The Power of a Common Man’, the app covers three main sections viz FIR, WOMEN and CONSUMER with all practicable ways to get relief without hassle. Legal Formats are also attached wherever needed, so that the user just has to fill facts and set the machinery in motion without incurring expenditure on legal fees.
 \n\nFEATURES OF THIS APP
 \n\n# This is the first Law based app to get a very pleasing User Interface that will make you fall in love with the app shortly. Easy Navigation and Search provides an icing on the cake.
@@ -49,7 +49,12 @@
 \n\n# You can ‘BOOKMARK’ any section of a Chapter or an Article which you need to visit frequently. This allows you to access this section easily for future use ( in the ‘bookmarks’ section of the app).
 \n\n# You can access all the data even when you are OFFLINE. This means you have your law books by you when you are on a flight or relaxing on a beach.
 \n\n- - - - - - - - - - - - -
-\n\nWe encourage suggestions and feedback. Please use the ‘FEEDBACK’ section in the app to write us back. We will try and incorporate every good suggestion ☺\n"
+\n\nApp Developers:
+\n\n1. Parth Chandra - B.A. LLB (Hons.), Hidayatullah National Law University, Raipur
+\n2. Ankur Khemani - M.S. Computer Science, University of Southern California
+\n3. Akshay Jain - B.Tech. Computer Science, ITM University, Gurgaon
+\n\nWe encourage suggestions and feedback. Please use the ‘FEEDBACK’ section in the app to write us back. We will try and incorporate every good suggestion ☺
+\n\nIf you like the application, do share it with your family and friends, and help us increase the awareness of crucial laws in India.\n"
 
 
                     android:padding="5dp"

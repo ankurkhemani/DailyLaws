@@ -2,11 +2,13 @@ package com.mindgames.dailylaw.activity;
 
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
@@ -61,8 +63,9 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
     ViewPager pager;
     ViewPagerAdapter adapter;
     SlidingTabLayout tabs;
-    CharSequence Titles[]={"Daily Law","Bare Acts", ""};
+    CharSequence Titles[]={"Daily Laws","Bare Acts", ""};
     int Numboftabs =2;
+    ProgressDialog LoadDialog;
 
     @Override
     public void onBackPressed() {
@@ -102,11 +105,8 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
 
         // preparing list data
         initializeVariables();
-        prepareIPCListData(0, ipcMap, 26);
-        prepareIPCListData(1, crpcMap, 40);
-        prepareIPCListData(2, cpcMap, 12);
-        prepareIPCListData(3, evidenceMap, 11);
-        prepareIPCListData(4, constitutionMap, 25);
+
+        new PrepareDatabase().execute();
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
 
@@ -138,27 +138,7 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
 
 
 
-        // Creating The ViewPagerAdapter and Passing Fragment Manager, Titles fot the Tabs and Number Of Tabs.
-        adapter =  new ViewPagerAdapter(getSupportFragmentManager(),Titles, Numboftabs);
 
-        // Assigning ViewPager View and setting the adapter
-        pager = (ViewPager) findViewById(R.id.pager);
-        pager.setAdapter(adapter);
-
-        // Assiging the Sliding Tab Layout View
-        tabs = (SlidingTabLayout) findViewById(R.id.tabs);
-        tabs.setDistributeEvenly(true); // To make the Tabs Fixed set this true, This makes the tabs Space Evenly in Available width
-
-        // Setting Custom Color for the Scroll bar indicator of the Tab View
-        tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
-            @Override
-            public int getIndicatorColor(int position) {
-                return getResources().getColor(R.color.Black);
-            }
-        });
-
-        // Setting the ViewPager For the SlidingTabsLayout
-        tabs.setViewPager(pager);
 
     }
 
@@ -189,7 +169,7 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
                 try
                 { Intent i = new Intent(Intent.ACTION_SEND);
                     i.setType("text/plain");
-                    i.putExtra(Intent.EXTRA_SUBJECT, "Daily Law");
+                    i.putExtra(Intent.EXTRA_SUBJECT, "Daily Laws - India");
                     String sAux = "\nCheck out this cool Android App that spreads " +
                             "awareness of useful everyday Indian Laws in layman terms!\n\n";
                     sAux = sAux + "https://play.google.com/store/apps/details?id="
@@ -419,4 +399,49 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
         listDataChildContainer.put(Type, listDataChild);
     }
 
+
+    class PrepareDatabase extends AsyncTask<Void, Void, Void> {
+        protected void onPreExecute() {
+            LoadDialog = new ProgressDialog(MainActivity.this);
+            LoadDialog.setMessage("Please wait for a moment ...");
+            LoadDialog.setCancelable(false);
+            LoadDialog.show();
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            prepareIPCListData(0, ipcMap, 26);
+            prepareIPCListData(1, crpcMap, 40);
+            prepareIPCListData(2, cpcMap, 12);
+            prepareIPCListData(3, evidenceMap, 11);
+            prepareIPCListData(4, constitutionMap, 25);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            // Creating The ViewPagerAdapter and Passing Fragment Manager, Titles fot the Tabs and Number Of Tabs.
+            adapter =  new ViewPagerAdapter(getSupportFragmentManager(),Titles, Numboftabs);
+
+            // Assigning ViewPager View and setting the adapter
+            pager = (ViewPager) findViewById(R.id.pager);
+            pager.setAdapter(adapter);
+
+            // Assiging the Sliding Tab Layout View
+            tabs = (SlidingTabLayout) findViewById(R.id.tabs);
+            tabs.setDistributeEvenly(true); // To make the Tabs Fixed set this true, This makes the tabs Space Evenly in Available width
+
+            // Setting Custom Color for the Scroll bar indicator of the Tab View
+            tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
+                @Override
+                public int getIndicatorColor(int position) {
+                    return getResources().getColor(R.color.Black);
+                }
+            });
+
+            // Setting the ViewPager For the SlidingTabsLayout
+            tabs.setViewPager(pager);
+            LoadDialog.dismiss();
+        }
+    }
 }
