@@ -10,12 +10,12 @@
     <TextView
         android:id="@+id/textView"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:textColor="@color/textColorPrimary"
-        android:textSize="30sp"
+        android:textSize="16sp"
         android:text="Know the common laws in your daily life."
         android:textStyle="bold"/>
 
@@ -28,42 +28,42 @@
         android:id="@+id/relativeLayout">
 
             <Button
-                android:layout_width="250dp"
-                android:layout_height="80dp"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
                 android:text="FIR"
                 android:textAlignment="center"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:id="@+id/button1"
                 android:background="@drawable/custom_button"/>
             <Button
-                android:layout_width="250dp"
-                android:layout_height="80dp"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
                 android:text="WOMEN"
                 android:textAlignment="center"
                 android:layout_below="@+id/button1"
-                android:layout_marginTop="30dp"
-                android:textSize="20sp"
+                android:layout_marginTop="15dp"
+                android:textSize="18sp"
                 android:background="@drawable/custom_button"
                 android:id="@+id/button2"/>
 
             <Button
-                android:layout_width="250dp"
-                android:layout_height="80dp"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
                 android:text="CONSUMER"
                 android:textAlignment="center"
-                android:textSize="20dp"
-                android:layout_marginTop="30dp"
+                android:textSize="18sp"
+                android:layout_marginTop="15dp"
                 android:id="@+id/button3"
                 android:layout_below="@+id/button2"
                 android:background="@drawable/custom_button"/>
 
         <Button
-            android:layout_width="250dp"
-            android:layout_height="80dp"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
             android:text="OTHER"
             android:textAlignment="center"
-            android:textSize="20sp"
-            android:layout_marginTop="30dp"
+            android:textSize="18sp"
+            android:layout_marginTop="15dp"
             android:id="@+id/button4"
             android:layout_below="@+id/button3"
             android:background="@drawable/custom_button"/>

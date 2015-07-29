@@ -21,23 +21,34 @@
         android:layout_width="wrap_content"
         android:textStyle="bold"
         android:textSize="18sp"
-        android:layout_toLeftOf="@+id/bookmark"
-        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/share"
+        android:layout_toRightOf="@+id/bookmark"
         android:textColor="#9B866D"
         android:paddingRight="5dp"
+        android:paddingLeft="5dp"
         android:gravity="center"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true" />
 
-
+        <Button
+            android:id="@+id/share"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@android:drawable/ic_menu_share"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp"
+            android:layout_centerVertical="true"
+            android:textOff=""
+            android:textOn=""
+            />
 
     <ToggleButton
         android:id="@+id/bookmark"
         android:layout_width="30dp"
         android:layout_height="50dp"
         android:background="@drawable/custom_bookmark"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="5dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="5dp"
         android:textOff=""
         android:textOn=""
         />

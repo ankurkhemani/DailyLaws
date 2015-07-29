@@ -36,7 +36,7 @@ public class DailyLawFragment extends Fragment {
     @OnClick(R.id.button1) public void FIR() {
         Intent myIntent = new Intent(getActivity(), DailyLawDisplayActivity.class);
         myIntent.putExtra("type", 1);
-        myIntent.putExtra("name", "Daily Law - FIR");
+        myIntent.putExtra("name", "Daily Laws - FIR");
 
         this.startActivity(myIntent);
     }
@@ -45,7 +45,7 @@ public class DailyLawFragment extends Fragment {
     @OnClick(R.id.button2) public void WOMEN() {
         Intent myIntent = new Intent(getActivity(), DailyLawDisplayActivity.class);
         myIntent.putExtra("type", 2);
-        myIntent.putExtra("name", "Daily Law - Women");
+        myIntent.putExtra("name", "Daily Laws - Women");
 
         this.startActivity(myIntent);
     }
@@ -54,7 +54,7 @@ public class DailyLawFragment extends Fragment {
     @OnClick(R.id.button3) public void CONSUMER() {
         Intent myIntent = new Intent(getActivity(), DailyLawDisplayActivity.class);
         myIntent.putExtra("type", 3);
-        myIntent.putExtra("name", "Daily Law - Consumer");
+        myIntent.putExtra("name", "Daily Laws - Consumer");
 
         this.startActivity(myIntent);
     }
@@ -63,7 +63,7 @@ public class DailyLawFragment extends Fragment {
     @OnClick(R.id.button4) public void OTHER() {
         Intent myIntent = new Intent(getActivity(), DailyLawDisplayActivity.class);
         myIntent.putExtra("type", 4);
-        myIntent.putExtra("name", "Daily Law - Other");
+        myIntent.putExtra("name", "Daily Laws - Other");
 
         this.startActivity(myIntent);
     }

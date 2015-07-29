@@ -1,6 +1,7 @@
 package com.mindgames.dailylaw.activity;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -164,7 +165,7 @@ public class LawBookFragment extends Fragment {
 
 
 
-                String message1 =
+                final String message1 =
                         MainActivity.listDataChildContainer.get(spinnerPosition).get(
                         MainActivity.listDataHeaderContainer.get(spinnerPosition).get(groupPosition)).get(
                         childPosition) + "\n\n" + typeMap.get(groupPosition).get(childPosition).SectionDisplay;
@@ -189,26 +190,32 @@ public class LawBookFragment extends Fragment {
                 final int Id = typeMap.get(groupPosition).get(childPosition).Id;
 
                 String title = "";
+                String BareAct = "";
                 switch(Type){
                     case 0:
                         title = "Chapter " + typeMap.get(groupPosition).get(childPosition).ChapterNumber.IPCChapterDenotion +
                                 " - " + typeMap.get(groupPosition).get(childPosition).ChapterNumber.IPCChapterDescription;
+                        BareAct = "IPC";
                         break;
                     case 1:
                         title = "Chapter " + typeMap.get(groupPosition).get(childPosition).ChapterNumber.CrPCChapterDenotion +
                                 " - " + typeMap.get(groupPosition).get(childPosition).ChapterNumber.CrPCChapterDescription;
+                        BareAct = "CrPC";
                         break;
                     case 2:
                         title = "Part " + typeMap.get(groupPosition).get(childPosition).ChapterNumber.CPCChapterDenotion +
                                 " - " + typeMap.get(groupPosition).get(childPosition).ChapterNumber.CPCChapterDescription;
+                        BareAct = "CPC";
                         break;
                     case 3:
                         title = "Chapter " + typeMap.get(groupPosition).get(childPosition).ChapterNumber.EvidenceChapterDenotion +
                                 " - " + typeMap.get(groupPosition).get(childPosition).ChapterNumber.EvidenceChapterDescription;
+                        BareAct = "Evidence Act";
                         break;
                     case 4:
                         title = "Part " + typeMap.get(groupPosition).get(childPosition).ChapterNumber.ConstiChapterDenotion +
                                 " - " + typeMap.get(groupPosition).get(childPosition).ChapterNumber.ConstiChapterDescription;
+                        BareAct = "Constitution of India";
                         break;
                 }
 
@@ -230,6 +237,29 @@ public class LawBookFragment extends Fragment {
                         } else { // toggle is off
                             LawBook.updateBookmarks(Id, 0);
 //                            bookmark.setTextOff("Add to Favorites");
+                        }
+                    }
+                });
+
+
+                final String shareTitle = title;
+                final String shareBareAct = BareAct;
+                final Button share = (Button) alertDialog.findViewById(R.id.share);
+                share.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        try
+                        { Intent i = new Intent(Intent.ACTION_SEND);
+                            i.setType("text/plain");
+                            String sAux = shareBareAct + "\n" + shareTitle + "\n\n" + message1 + "\n";
+                            sAux = sAux + "- - -\nShared using Daily Laws Android app. " +
+                                    "Get it on Google Play store:\n\n https://play.google.com/store/apps/details?id="
+                                    + getActivity().getPackageName() + "\n";
+                            i.putExtra(Intent.EXTRA_TEXT, sAux);
+                            startActivity(Intent.createChooser(i, "Choose One"));
+                        }
+                        catch(Exception e)
+                        { //e.toString();
                         }
                     }
                 });

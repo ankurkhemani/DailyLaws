@@ -33,6 +33,9 @@ import android.widget.Toast;
 
 
 import com.activeandroid.ActiveAndroid;
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.mindgames.dailylaw.R;
 import com.mindgames.dailylaw.adapter.ViewPagerAdapter;
 import com.mindgames.dailylaw.external.SlidingTabLayout;
@@ -66,6 +69,10 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
     CharSequence Titles[]={"Daily Laws","Bare Acts", ""};
     int Numboftabs =2;
     ProgressDialog LoadDialog;
+    boolean firstTime = true;
+
+    public static GoogleAnalytics analytics;
+    public static Tracker tracker;
 
     @Override
     public void onBackPressed() {
@@ -94,20 +101,37 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        //GOOGLE ANALYTICS
+        analytics = GoogleAnalytics.getInstance(this);
+        analytics.setLocalDispatchPeriod(1800);
+
+        tracker = analytics.newTracker("UA-40831892-7"); // Replace with actual tracker/property Id
+
+        // All subsequent hits will be send with screen name = "main screen"
+        tracker.setScreenName("main screen");
+
+        tracker.enableExceptionReporting(true);
+        tracker.enableAutoActivityTracking(true);
+
+
         //initialize ActiveAndroid
         ActiveAndroid.initialize(this);
 
+        // initialize variables
+        initializeVariables();
+
+        //Run Async Task - preparing DB
+        new PrepareDatabase().execute();
+
+        //AppRater code
         AppRater appRater = new AppRater(this);
         appRater.setDaysBeforePrompt(1);
         appRater.setLaunchesBeforePrompt(3);
         appRater.setPhrases("Rate this app", "Please take a moment to rate this app!", "Rate now", "Later", "No, thanks");
         appRater.show();
 
-        // preparing list data
-        initializeVariables();
-
-        new PrepareDatabase().execute();
-
+        //Toolbar code
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
 
         setSupportActionBar(mToolbar);
@@ -169,11 +193,11 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
                 try
                 { Intent i = new Intent(Intent.ACTION_SEND);
                     i.setType("text/plain");
-                    i.putExtra(Intent.EXTRA_SUBJECT, "Daily Laws - India");
-                    String sAux = "\nCheck out this cool Android App that spreads " +
-                            "awareness of useful everyday Indian Laws in layman terms!\n\n";
-                    sAux = sAux + "https://play.google.com/store/apps/details?id="
-                            + getApplicationContext().getPackageName() + "\n\n";
+                    String sAux = "Daily Laws - India\n\nCheck out this cool Android App that spreads " +
+                            "awareness of useful everyday Indian Laws in layman terms!\n\n" +
+                            "Also, a must have for all law students and lawyers!\n\n";
+                    sAux = sAux + "Get it on Google Play store now:\n\nhttps://play.google.com/store/apps/details?id="
+                            + getApplicationContext().getPackageName() + "\n\n#UnleashThePowerOfCommonMan";
                     i.putExtra(Intent.EXTRA_TEXT, sAux);
                     startActivity(Intent.createChooser(i, "Choose One"));
                     return true;
@@ -207,6 +231,32 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
             case 1:
                 alertDialog.setContentView(R.layout.about);
                 Button done1 = (Button) alertDialog.findViewById(R.id.done);
+                Button flike = (Button) alertDialog.findViewById(R.id.flike);
+
+
+                flike.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // open facebook
+                        try
+                        {
+                            // try to open fb app if available
+                            getApplicationContext().getPackageManager().getPackageInfo("com.facebook.katana", 0);
+                            Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("fb://profile/471755599659763"));
+
+                            startActivity(i);
+                            overridePendingTransition(R.anim.left_in,R.anim.left_out);
+                        }
+                        catch (Exception e)
+                        {
+                            // if no fb app then open web page
+                            Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/iqtestsaga"));
+
+                            startActivity(i);
+                            overridePendingTransition(R.anim.left_in,R.anim.left_out);
+                        }
+                    }
+                });
 
                 done1.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -227,6 +277,12 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
                 rate.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
+                        tracker.send(new HitBuilders.EventBuilder()
+                                .setCategory("UX")
+                                .setAction("click")
+                                .setLabel("Rate Now")
+                                .build());
 
                         Uri uri = Uri.parse("market://details?id=" + getApplicationContext().getPackageName());                        Intent i = new Intent(Intent.ACTION_VIEW, uri);
                         try
@@ -342,7 +398,7 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
      /*
      * Preparing the list data for LawBook
      */
-    private void prepareIPCListData(int Type, HashMap<Integer, List<LawBook>> typeMap, int numberOfChapters) {
+    private void prepareListData(int Type, HashMap<Integer, List<LawBook>> typeMap, int numberOfChapters) {
 
 
         List<String> listDataHeader = new ArrayList<String>();;
@@ -410,11 +466,11 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
 
         @Override
         protected Void doInBackground(Void... params) {
-            prepareIPCListData(0, ipcMap, 26);
-            prepareIPCListData(1, crpcMap, 40);
-            prepareIPCListData(2, cpcMap, 12);
-            prepareIPCListData(3, evidenceMap, 11);
-            prepareIPCListData(4, constitutionMap, 25);
+            prepareListData(0, ipcMap, 26);
+            prepareListData(1, crpcMap, 40);
+            prepareListData(2, cpcMap, 12);
+            prepareListData(3, evidenceMap, 11);
+            prepareListData(4, constitutionMap, 25);
             return null;
         }
 
@@ -425,6 +481,7 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
 
             // Assigning ViewPager View and setting the adapter
             pager = (ViewPager) findViewById(R.id.pager);
+
             pager.setAdapter(adapter);
 
             // Assiging the Sliding Tab Layout View
@@ -444,4 +501,18 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
             LoadDialog.dismiss();
         }
     }
+
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        //Check if ipcMAp is cleared by Garbage Collector, then prepareDB again, else setAdapter
+//        if(!firstTime && listDataHeaderContainer.get(0).size()==0)
+//            new PrepareDatabase().execute();
+//    }
+//
+//    @Override
+//    protected void onPause() {
+//        super.onPause();
+//        firstTime = false;
+//    }
 }

@@ -1,6 +1,7 @@
 package com.mindgames.dailylaw.activity;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
@@ -220,28 +221,32 @@ public class SearchResultsActivity extends ActionBarActivity {
                         final int Id = searchList.get(position).Id;
 
                         String title = "";
-
+                        String BareAct = "";
                         switch (searchList.get(position).Type) {
                             case 0:
                                 title = "Chapter " + searchList.get(position).ChapterNumber.IPCChapterDenotion +
                                         " - " + searchList.get(position).ChapterNumber.IPCChapterDescription;
-
+                                BareAct = "IPC";
                                 break;
                             case 1:
                                 title = "Chapter " + searchList.get(position).ChapterNumber.CrPCChapterDenotion +
                                         " - " + searchList.get(position).ChapterNumber.CrPCChapterDescription;
+                                BareAct = "CrPC";
                                 break;
                             case 2:
                                 title = "Part " + searchList.get(position).ChapterNumber.CPCChapterDenotion +
                                         " - " + searchList.get(position).ChapterNumber.CPCChapterDescription;
+                                BareAct = "CPC";
                                 break;
                             case 3:
                                 title = "Chapter " + searchList.get(position).ChapterNumber.EvidenceChapterDenotion +
                                         " - " + searchList.get(position).ChapterNumber.EvidenceChapterDescription;
+                                BareAct = "Evidence Act";
                                 break;
                             case 4:
                                 title = "Part " + searchList.get(position).ChapterNumber.ConstiChapterDenotion +
                                         " - " + searchList.get(position).ChapterNumber.ConstiChapterDescription;
+                                BareAct = "Constitution of India";
                                 break;
                         }
 
@@ -262,6 +267,28 @@ public class SearchResultsActivity extends ActionBarActivity {
                                 } else { // toggle is off
                                     LawBook.updateBookmarks(Id, 0);
 //                                    bookmark.setTextOff("Add to Favorites");
+                                }
+                            }
+                        });
+
+                        final String shareTitle = title;
+                        final String shareBareAct = BareAct;
+                        final String shareMessage = message1;
+
+                        final Button share = (Button) alertDialog.findViewById(R.id.share);
+                        share.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                try {
+                                    Intent i = new Intent(Intent.ACTION_SEND);
+                                    i.setType("text/plain");
+                                    String sAux = shareBareAct + "\n" + shareTitle + "\n\n" + shareMessage + "\n";
+                                    sAux = sAux + "- - -\nShared using Daily Laws Android app. " +
+                                            "Get it on Google Play store:\n\n https://play.google.com/store/apps/details?id="
+                                            + getApplicationContext().getPackageName() + "\n";
+                                    i.putExtra(Intent.EXTRA_TEXT, sAux);
+                                    startActivity(Intent.createChooser(i, "Choose One"));
+                                } catch (Exception e) { //e.toString();
                                 }
                             }
                         });
