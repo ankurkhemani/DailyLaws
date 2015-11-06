@@ -27,3 +27,5 @@ Also thanks to following open source projects used in the app:
 - ListViewAnimations
 - MaterialDialog
 - AppRater
+
+Special Thanks to Ravi Tamada for awesome posts on Android!
